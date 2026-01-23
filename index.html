@@ -1,11 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>undmg | Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>undmg | Cyber Portfolio</title>
+
+<style>
+:root {
+  --bg: #05070d;
+  --blue: #00aaff;
+  --blue-soft: rgba(0,170,255,0.15);
+  --text: #e6f1ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at top, #081120, var(--bg));
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* === MOUSE GLOW === */
+.cursor {
+  position: fixed;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--blue-soft), transparent 60%);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+/* === LAYOUT === */
+.container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 100px 20px;
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  margin-bottom: 120px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-size: 64px;
+  letter-spacing: 2px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: var(--blue);
+}
+
+p {
+  line-height: 1.7;
+  opacity: 0.85;
+  max-width: 700px;
+}
+
+/* === HERO === */
+.hero p {
+  margin-top: 15px;
+  font-size: 18px;
+}
+
+.glitch {
+  color: var(--blue);
+  text-shadow: 0 0 20px var(--blue);
+}
+
+/* === CARDS === */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(0,170,255,0.2);
+  border-radius: 16px;
+  padding: 25px;
+  transition: 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 30px rgba(0,170,255,0.25);
+}
+
+/* === LINKS === */
+a {
+  color: var(--blue);
+  text-decoration: none;
+}
+
+footer {
+  text-align: center;
+  opacity: 0.5;
+  font-size: 14px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  h1 { font-size: 42px; }
+}
+</style>
 </head>
+
 <body>
-  <h1>undmg</h1>
-  <p>My first GitHub Pages website 🚀</p>
+
+<div class="cursor" id="cursor"></div>
+
+<div class="container">
+
+  <section class="hero">
+    <h1 class="glitch">undmg</h1>
+    <p>Creative developer · utility builder · digital tinkerer</p>
+  </section>
+
+  <section>
+    <h2>About Me</h2>
+    <p>
+      I’m a developer who likes building weird, useful, and sometimes unnecessary things.
+      I enjoy mixing code with aesthetics — utilities that feel alive, interfaces that move,
+      and projects that sit somewhere between software and art.
+      <br><br>
+      I mostly work on small tools, experimental apps, and systems that automate or simplify things.
+      I care about vibe as much as functionality.
+    </p>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>ASCII Animation Tool</h3>
+        <p>Terminal-style animated ASCII visuals reacting to movement and input.</p>
+      </div>
+      <div class="card">
+        <h3>Avatar Utility</h3>
+        <p>Roblox profile → avatar processing tool with proxy-based fetching.</p>
+      </div>
+      <div class="card">
+        <h3>Desktop Companion</h3>
+        <p>Floating assistant inspired by Clippy / Bonzi with modern behavior.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Links</h2>
+    <p>
+      <a href="https://github.com/undmg" target="_blank">GitHub</a>
+    </p>
+  </section>
+
+  <footer>
+    <p>© undmg · cyber portfolio</p>
+  </footer>
+
+</div>
+
+<script>
+/* MOUSE GLOW */
+const cursor = document.getElementById("cursor");
+window.addEventListener("mousemove", e => {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+});
+
+/* SCROLL ANIMATIONS */
+const sections = document.querySelectorAll("section");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add("show");
+  });
+}, { threshold: 0.15 });
+
+sections.forEach(sec => observer.observe(sec));
+</script>
+
 </body>
 </html>

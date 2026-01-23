@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNDMG | Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,16 +16,22 @@
         }
 
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-card: #12121a;
-            --purple-primary: #8b5cf6;
-            --purple-secondary: #a78bfa;
-            --purple-dark: #6d28d9;
-            --purple-glow: rgba(139, 92, 246, 0.4);
-            --cyan-accent: #22d3ee;
-            --text-primary: #e2e8f0;
-            --text-secondary: #94a3b8;
-            --border-color: rgba(139, 92, 246, 0.3);
+            --bg-dark: #050508;
+            --bg-darker: #020203;
+            --bg-card: #0a0a10;
+            --purple-primary: #9333ea;
+            --purple-neon: #a855f7;
+            --purple-secondary: #7c3aed;
+            --purple-dark: #4c1d95;
+            --purple-darker: #2e1065;
+            --purple-glow: rgba(147, 51, 234, 0.5);
+            --purple-subtle: rgba(147, 51, 234, 0.15);
+            --gray-dark: #18181b;
+            --gray-darker: #0f0f12;
+            --text-primary: #d4d4d8;
+            --text-secondary: #71717a;
+            --text-muted: #52525b;
+            --border-color: rgba(147, 51, 234, 0.2);
         }
 
         html {
@@ -37,18 +46,125 @@
             cursor: default;
         }
 
-        /* Mouse Glow Effect */
+        /* Fixed Background with Smoke/Cloud Animation */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--bg-darker);
+            overflow: hidden;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .smoke-layer {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background:
+                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(78, 35, 135, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 70% 60%, rgba(55, 25, 90, 0.1) 0%, transparent 45%),
+                radial-gradient(ellipse 90% 60% at 50% 80%, rgba(40, 20, 70, 0.08) 0%, transparent 55%);
+            animation: smokeMove1 40s ease-in-out infinite;
+        }
+
+        .smoke-layer:nth-child(2) {
+            background:
+                radial-gradient(ellipse 70% 45% at 80% 30%, rgba(90, 40, 150, 0.1) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 35% at 30% 70%, rgba(60, 30, 100, 0.08) 0%, transparent 45%);
+            animation: smokeMove2 50s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        .smoke-layer:nth-child(3) {
+            background:
+                radial-gradient(ellipse 100% 70% at 40% 50%, rgba(45, 20, 80, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 30% at 60% 40%, rgba(70, 35, 120, 0.07) 0%, transparent 50%);
+            animation: smokeMove3 60s ease-in-out infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes smokeMove1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            25% {
+                transform: translate(-5%, 3%) scale(1.02);
+            }
+
+            50% {
+                transform: translate(-10%, -2%) scale(1.05);
+            }
+
+            75% {
+                transform: translate(-3%, 5%) scale(1.02);
+            }
+        }
+
+        @keyframes smokeMove2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(5%, -4%) scale(1.03);
+            }
+
+            66% {
+                transform: translate(-8%, 6%) scale(1.01);
+            }
+        }
+
+        @keyframes smokeMove3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(8%, -8%) scale(1.04);
+            }
+        }
+
+        /* Noise/Grain Overlay */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10001;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Mouse Glow Effect - Neon Purple */
         .mouse-glow {
             position: fixed;
-            width: 400px;
-            height: 400px;
+            width: 500px;
+            height: 500px;
             border-radius: 50%;
-            background: radial-gradient(circle, var(--purple-glow) 0%, transparent 70%);
+            background: radial-gradient(circle, var(--purple-glow) 0%, rgba(147, 51, 234, 0.2) 30%, transparent 70%);
             pointer-events: none;
             z-index: 9999;
             transform: translate(-50%, -50%);
-            opacity: 0.6;
+            opacity: 0.5;
             transition: opacity 0.3s ease;
+            mix-blend-mode: screen;
         }
 
         /* Scanline Effect */
@@ -60,13 +176,11 @@
             height: 100%;
             pointer-events: none;
             z-index: 10000;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, 0.03) 2px,
-                rgba(0, 0, 0, 0.03) 4px
-            );
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.02) 2px,
+                    rgba(0, 0, 0, 0.02) 4px);
         }
 
         /* Navigation */
@@ -80,7 +194,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: linear-gradient(to bottom, var(--bg-dark), transparent);
+            background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95), transparent);
             backdrop-filter: blur(10px);
         }
 
@@ -88,8 +202,8 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 1.5rem;
             font-weight: 900;
-            color: var(--purple-primary);
-            text-shadow: 0 0 20px var(--purple-glow);
+            color: var(--purple-neon);
+            text-shadow: 0 0 20px var(--purple-glow), 0 0 40px var(--purple-glow);
             letter-spacing: 3px;
         }
 
@@ -117,13 +231,14 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--purple-primary);
-            box-shadow: 0 0 10px var(--purple-primary);
+            background: var(--purple-neon);
+            box-shadow: 0 0 10px var(--purple-neon), 0 0 20px var(--purple-neon);
             transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--purple-primary);
+            color: var(--purple-neon);
+            text-shadow: 0 0 10px var(--purple-glow);
         }
 
         .nav-links a:hover::after {
@@ -148,18 +263,6 @@
             overflow: hidden;
         }
 
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 40%);
-            z-index: 0;
-        }
-
         .hero-content {
             position: relative;
             z-index: 1;
@@ -171,42 +274,63 @@
             font-weight: 900;
             letter-spacing: 10px;
             margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--purple-primary) 0%, var(--cyan-accent) 50%, var(--purple-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: none;
-            animation: glitch 5s infinite;
+            color: var(--purple-neon);
+            text-shadow:
+                0 0 10px var(--purple-glow),
+                0 0 30px var(--purple-glow),
+                0 0 60px rgba(147, 51, 234, 0.3);
+            animation: neonPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+
+            0%,
+            100% {
+                text-shadow:
+                    0 0 10px var(--purple-glow),
+                    0 0 30px var(--purple-glow),
+                    0 0 60px rgba(147, 51, 234, 0.3);
+            }
+
+            50% {
+                text-shadow:
+                    0 0 15px var(--purple-glow),
+                    0 0 40px var(--purple-glow),
+                    0 0 80px rgba(147, 51, 234, 0.4);
+            }
         }
 
         .hero-tagline {
             font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--text-secondary);
+            color: var(--text-muted);
             letter-spacing: 5px;
             text-transform: uppercase;
             margin-bottom: 40px;
         }
 
         .hero-tagline span {
-            color: var(--purple-primary);
+            color: var(--purple-neon);
+            text-shadow: 0 0 10px var(--purple-glow);
         }
 
         .cyber-border {
             position: relative;
             padding: 15px 40px;
-            background: transparent;
-            border: 2px solid var(--purple-primary);
+            background: rgba(147, 51, 234, 0.05);
+            border: 1px solid var(--purple-primary);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.2), inset 0 0 20px rgba(147, 51, 234, 0.05);
             clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
         }
 
         .cyber-border::before {
             content: '';
             position: absolute;
-            top: -2px;
-            right: -2px;
+            top: -1px;
+            right: -1px;
             width: 20px;
             height: 20px;
-            background: var(--purple-primary);
+            background: var(--purple-neon);
+            box-shadow: 0 0 10px var(--purple-neon);
             clip-path: polygon(0 0, 100% 0, 100% 100%);
         }
 
@@ -225,28 +349,35 @@
         .scroll-indicator span {
             font-size: 0.8rem;
             letter-spacing: 3px;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
         .scroll-arrow {
             width: 30px;
             height: 30px;
-            border-right: 2px solid var(--purple-primary);
-            border-bottom: 2px solid var(--purple-primary);
+            border-right: 2px solid var(--purple-neon);
+            border-bottom: 2px solid var(--purple-neon);
             transform: rotate(45deg);
+            box-shadow: 3px 3px 10px rgba(147, 51, 234, 0.3);
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
-            40% { transform: translateX(-50%) translateY(-10px); }
-            60% { transform: translateX(-50%) translateY(-5px); }
-        }
 
-        @keyframes glitch {
-            0%, 90%, 100% { opacity: 1; }
-            92% { opacity: 0.8; transform: translateX(-2px); }
-            94% { opacity: 1; transform: translateX(2px); }
-            96% { opacity: 0.9; transform: translateX(0); }
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         /* Section Headers */
@@ -259,29 +390,28 @@
             font-family: 'Orbitron', sans-serif;
             font-size: clamp(2rem, 5vw, 3rem);
             font-weight: 700;
-            color: var(--purple-primary);
+            color: var(--purple-neon);
             letter-spacing: 5px;
             text-transform: uppercase;
             display: inline-block;
+            text-shadow: 0 0 20px var(--purple-glow);
         }
 
         .section-title::before {
             content: '//';
             margin-right: 15px;
-            color: var(--cyan-accent);
+            color: var(--purple-primary);
+            opacity: 0.6;
         }
 
         .section-line {
-            height: 2px;
+            height: 1px;
             background: linear-gradient(90deg, var(--purple-primary), transparent);
             margin-top: 15px;
+            box-shadow: 0 0 10px var(--purple-glow);
         }
 
         /* About Section */
-        .about {
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #0f0f18 100%);
-        }
-
         .about-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -300,7 +430,8 @@
         }
 
         .about-text strong {
-            color: var(--purple-primary);
+            color: var(--purple-neon);
+            text-shadow: 0 0 10px var(--purple-glow);
         }
 
         .about-stats {
@@ -325,13 +456,14 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--purple-primary), var(--cyan-accent));
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--purple-neon), transparent);
+            box-shadow: 0 0 10px var(--purple-neon);
         }
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 40px var(--purple-glow);
+            box-shadow: 0 10px 40px rgba(147, 51, 234, 0.2);
             border-color: var(--purple-primary);
         }
 
@@ -339,22 +471,19 @@
             font-family: 'Orbitron', sans-serif;
             font-size: 2.5rem;
             font-weight: 700;
-            color: var(--purple-primary);
+            color: var(--purple-neon);
             margin-bottom: 10px;
+            text-shadow: 0 0 15px var(--purple-glow);
         }
 
         .stat-label {
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
             letter-spacing: 2px;
             text-transform: uppercase;
         }
 
         /* Projects Section */
-        .projects {
-            background: var(--bg-dark);
-        }
-
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -366,8 +495,13 @@
             border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+            cursor: default;
+        }
+
+        .project-card.clickable {
+            cursor: pointer;
         }
 
         .project-card::before {
@@ -377,7 +511,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, transparent 60%, var(--purple-glow) 100%);
+            background: linear-gradient(135deg, transparent 60%, rgba(147, 51, 234, 0.15) 100%);
             opacity: 0;
             transition: opacity 0.4s ease;
             z-index: 1;
@@ -388,22 +522,30 @@
         }
 
         .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3);
-            border-color: var(--purple-primary);
+            transform: scale(0.97);
+            box-shadow: 0 10px 40px rgba(147, 51, 234, 0.25);
+            border-color: var(--purple-neon);
+        }
+
+        .project-card.clickable:hover {
+            transform: scale(0.95);
+        }
+
+        .project-card:active {
+            transform: scale(0.93);
         }
 
         .project-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, var(--purple-dark) 0%, var(--bg-dark) 100%);
+            background: linear-gradient(135deg, var(--purple-darker) 0%, var(--bg-darker) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-family: 'Orbitron', sans-serif;
             font-size: 3rem;
             color: var(--purple-primary);
-            opacity: 0.5;
+            opacity: 0.4;
         }
 
         .project-content {
@@ -434,19 +576,15 @@
 
         .tag {
             padding: 5px 15px;
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid var(--purple-primary);
+            background: rgba(147, 51, 234, 0.1);
+            border: 1px solid var(--purple-dark);
             font-size: 0.75rem;
             letter-spacing: 1px;
             text-transform: uppercase;
-            color: var(--purple-secondary);
+            color: var(--purple-neon);
         }
 
         /* Media Section */
-        .media {
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #0f0f18 100%);
-        }
-
         .media-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -457,22 +595,21 @@
             position: relative;
             aspect-ratio: 16/9;
             overflow: hidden;
-            border: 2px solid var(--border-color);
+            border: 1px solid var(--border-color);
             background: var(--bg-card);
             transition: all 0.4s ease;
         }
 
         .media-item:hover {
             border-color: var(--purple-primary);
-            box-shadow: 0 0 40px var(--purple-glow);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.2);
             transform: scale(1.02);
         }
 
-        .media-item img,
-        .media-item video {
+        .media-item iframe {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            border: none;
         }
 
         .media-placeholder {
@@ -482,8 +619,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, var(--bg-card) 0%, var(--purple-dark) 100%);
-            opacity: 0.8;
+            background: linear-gradient(135deg, var(--bg-card) 0%, var(--purple-darker) 100%);
         }
 
         .media-placeholder svg {
@@ -491,17 +627,39 @@
             height: 50px;
             stroke: var(--purple-primary);
             margin-bottom: 15px;
+            opacity: 0.6;
         }
 
         .media-placeholder span {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 0.9rem;
             letter-spacing: 2px;
         }
 
+        .media-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(5, 5, 8, 0.95), transparent);
+            z-index: 2;
+        }
+
+        .media-caption h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--purple-neon);
+            margin-bottom: 5px;
+        }
+
+        .media-caption p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
         /* Links Section */
         .links {
-            background: var(--bg-dark);
             text-align: center;
         }
 
@@ -519,7 +677,7 @@
             gap: 15px;
             padding: 20px 40px;
             background: transparent;
-            border: 2px solid var(--purple-primary);
+            border: 1px solid var(--purple-primary);
             color: var(--text-primary);
             text-decoration: none;
             font-family: 'Rajdhani', sans-serif;
@@ -539,7 +697,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, var(--purple-glow), transparent);
+            background: linear-gradient(90deg, transparent, rgba(147, 51, 234, 0.2), transparent);
             transition: left 0.5s ease;
         }
 
@@ -548,9 +706,11 @@
         }
 
         .link-btn:hover {
-            background: var(--purple-primary);
-            box-shadow: 0 0 30px var(--purple-glow);
+            background: rgba(147, 51, 234, 0.2);
+            border-color: var(--purple-neon);
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
             transform: translateY(-3px);
+            color: var(--purple-neon);
         }
 
         .link-btn svg {
@@ -565,17 +725,16 @@
             padding: 40px;
             text-align: center;
             border-top: 1px solid var(--border-color);
-            background: var(--bg-dark);
         }
 
         footer p {
-            color: var(--text-secondary);
+            color: var(--text-muted);
             font-size: 0.9rem;
             letter-spacing: 2px;
         }
 
         footer span {
-            color: var(--purple-primary);
+            color: var(--purple-neon);
         }
 
         /* Mobile Menu */
@@ -590,7 +749,8 @@
         .mobile-menu-btn span {
             width: 30px;
             height: 2px;
-            background: var(--purple-primary);
+            background: var(--purple-neon);
+            box-shadow: 0 0 5px var(--purple-glow);
             transition: all 0.3s ease;
         }
 
@@ -606,7 +766,7 @@
                 right: -100%;
                 width: 70%;
                 height: 100vh;
-                background: var(--bg-dark);
+                background: var(--bg-darker);
                 flex-direction: column;
                 justify-content: center;
                 align-items: center;
@@ -662,10 +822,23 @@
         }
     </style>
 </head>
+
 <body>
+    <!-- Fixed Background -->
+    <div class="bg-container">
+        <div class="smoke">
+            <div class="smoke-layer"></div>
+            <div class="smoke-layer"></div>
+            <div class="smoke-layer"></div>
+        </div>
+    </div>
+
+    <!-- Noise Overlay -->
+    <div class="noise-overlay"></div>
+
     <!-- Mouse Glow -->
     <div class="mouse-glow" id="mouseGlow"></div>
-    
+
     <!-- Scanlines -->
     <div class="scanlines"></div>
 
@@ -676,7 +849,7 @@
             <li><a href="#hero">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#projects">Projects</a></li>
-            <li><a href="#media">Media</a></li>
+            <li><a href="#media">Showcase</a></li>
             <li><a href="#links">Links</a></li>
         </ul>
         <div class="mobile-menu-btn" id="mobileMenuBtn">
@@ -688,12 +861,12 @@
 
     <!-- Hero Section -->
     <section class="hero" id="hero">
-        <div class="hero-bg"></div>
         <div class="hero-content">
             <h1 class="hero-title">UNDMG</h1>
             <p class="hero-tagline">Developer <span>//</span> Creator <span>//</span> Innovator</p>
             <div class="cyber-border">
-                <span style="font-size: 0.9rem; letter-spacing: 3px; color: var(--text-secondary);">WELCOME TO MY DIGITAL REALM</span>
+                <span style="font-size: 0.9rem; letter-spacing: 3px; color: var(--text-muted);">WELCOME TO MY DIGITAL
+                    REALM</span>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -711,24 +884,31 @@
         <div class="about-content">
             <div class="about-text fade-in">
                 <p>
-                    Welcome to my corner of the internet. I'm a passionate <strong>developer</strong> and <strong>creator</strong> 
-                    with a deep love for technology, gaming, and building things that make a difference. My journey started 
-                    years ago when I first discovered the magic of code, and since then, I've been on an endless quest to 
+                    Welcome to my corner of the internet. I'm a passionate <strong>developer</strong> and
+                    <strong>creator</strong>
+                    with a deep love for technology, gaming, and building things that make a difference. My journey
+                    started
+                    years ago when I first discovered the magic of code, and since then, I've been on an endless quest
+                    to
                     learn, create, and innovate.
                 </p>
                 <p>
-                    I specialize in <strong>game development</strong>, <strong>web technologies</strong>, and <strong>software engineering</strong>. 
-                    Whether it's crafting immersive experiences in Roblox, building sleek web applications, or developing 
+                    I specialize in <strong>game development</strong>, <strong>web technologies</strong>, and
+                    <strong>software engineering</strong>.
+                    Whether it's crafting immersive experiences in Roblox, building sleek web applications, or
+                    developing
                     tools that help other creators, I pour my heart and soul into every project I undertake.
                 </p>
                 <p>
-                    Beyond coding, I'm fascinated by <strong>cyberpunk aesthetics</strong>, futuristic UI/UX design, and the 
-                    intersection of technology and art. I believe that the best software isn't just functional—it's beautiful, 
+                    Beyond coding, I'm fascinated by <strong>cyberpunk aesthetics</strong>, futuristic UI/UX design, and
+                    the
+                    intersection of technology and art. I believe that the best software isn't just functional—it's
+                    beautiful,
                     intuitive, and leaves a lasting impression on those who use it.
                 </p>
                 <p>
-                    When I'm not behind a screen, you'll find me exploring new technologies, contributing to open-source 
-                    projects, or helping fellow developers in the community. I'm always open to collaboration and new 
+                    When I'm not behind a screen, you'll find me exploring new technologies, contributing to open-source
+                    projects, or helping fellow developers in the community. I'm always open to collaboration and new
                     opportunities, so don't hesitate to reach out!
                 </p>
             </div>
@@ -760,11 +940,13 @@
             <div class="section-line"></div>
         </div>
         <div class="projects-grid">
-            <div class="project-card fade-in">
+            <div class="project-card clickable fade-in"
+                onclick="window.open('https://github.com/undmg/rbxl-to-text-tool', '_blank')">
                 <div class="project-image">⚡</div>
                 <div class="project-content">
                     <h3 class="project-title">RBXL to Text Tool</h3>
-                    <p class="project-desc">A powerful tool for extracting scripts and data from Roblox place files. Export to TXT, LUA, or LUAU with Rojo compatibility.</p>
+                    <p class="project-desc">A powerful tool for extracting scripts and data from Roblox place files.
+                        Export to TXT, LUA, or LUAU with Rojo compatibility.</p>
                     <div class="project-tags">
                         <span class="tag">Python</span>
                         <span class="tag">PyQt5</span>
@@ -776,7 +958,8 @@
                 <div class="project-image">🎮</div>
                 <div class="project-content">
                     <h3 class="project-title">Kindred</h3>
-                    <p class="project-desc">An immersive horror game experience built on Roblox with advanced parkour mechanics, stealth systems, and atmospheric storytelling.</p>
+                    <p class="project-desc">An immersive horror game experience built on Roblox with advanced parkour
+                        mechanics, stealth systems, and atmospheric storytelling.</p>
                     <div class="project-tags">
                         <span class="tag">Roblox</span>
                         <span class="tag">Lua</span>
@@ -788,7 +971,8 @@
                 <div class="project-image">🌐</div>
                 <div class="project-content">
                     <h3 class="project-title">Portfolio Website</h3>
-                    <p class="project-desc">This very website! A cyberpunk-themed single-page portfolio with smooth animations, mouse-follow effects, and responsive design.</p>
+                    <p class="project-desc">This very website! A cyberpunk-themed single-page portfolio with smooth
+                        animations, mouse-follow effects, and responsive design.</p>
                     <div class="project-tags">
                         <span class="tag">HTML</span>
                         <span class="tag">CSS</span>
@@ -796,52 +980,52 @@
                     </div>
                 </div>
             </div>
-            <div class="project-card fade-in">
+            <div class="project-card clickable fade-in"
+                onclick="window.open('https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs', '_blank')">
                 <div class="project-image">🔧</div>
                 <div class="project-content">
-                    <h3 class="project-title">Dev Tools Suite</h3>
-                    <p class="project-desc">Collection of developer utilities and plugins designed to streamline workflow and boost productivity for game developers.</p>
+                    <h3 class="project-title">Rig Closet</h3>
+                    <p class="project-desc">Studio rig catalog helper plugin. Streamlines your workflow by providing
+                        quick access to your rig collection.</p>
                     <div class="project-tags">
-                        <span class="tag">Tools</span>
-                        <span class="tag">Automation</span>
-                        <span class="tag">Plugins</span>
+                        <span class="tag">Roblox</span>
+                        <span class="tag">Plugin</span>
+                        <span class="tag">Lua</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Media Section -->
+    <!-- Media/Showcase Section -->
     <section class="media" id="media">
         <div class="section-header fade-in">
-            <h2 class="section-title">Media</h2>
+            <h2 class="section-title">Showcase</h2>
             <div class="section-line"></div>
         </div>
         <div class="media-grid">
             <div class="media-item fade-in">
                 <div class="media-placeholder">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="M21 15l-5-5L5 21"/>
+                        <polygon points="5,3 19,12 5,21" />
                     </svg>
-                    <span>Screenshot 1</span>
+                    <span>Video Preview</span>
                 </div>
             </div>
             <div class="media-item fade-in">
                 <div class="media-placeholder">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="M21 15l-5-5L5 21"/>
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <path d="M21 15l-5-5L5 21" />
                     </svg>
-                    <span>Screenshot 2</span>
+                    <span>Screenshot</span>
                 </div>
             </div>
             <div class="media-item fade-in">
                 <div class="media-placeholder">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                        <polygon points="5,3 19,12 5,21"/>
+                        <polygon points="5,3 19,12 5,21" />
                     </svg>
                     <span>Video Demo</span>
                 </div>
@@ -849,9 +1033,9 @@
             <div class="media-item fade-in">
                 <div class="media-placeholder">
                     <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <path d="M21 15l-5-5L5 21"/>
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="8.5" cy="8.5" r="1.5" />
+                        <path d="M21 15l-5-5L5 21" />
                     </svg>
                     <span>GIF Preview</span>
                 </div>
@@ -868,31 +1052,32 @@
         <div class="links-grid fade-in">
             <a href="https://github.com/undmg" target="_blank" class="link-btn">
                 <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
+                    <path
+                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
                 </svg>
                 GitHub
             </a>
             <a href="https://discord.gg/" target="_blank" class="link-btn">
                 <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path d="M8.5 14a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                    <path d="M15.5 14a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"/>
-                    <path d="M20.5 9c.9 3.3.3 6-1.5 9-1.5 1.5-4 2.5-7 2.5s-5.5-1-7-2.5c-1.8-3-.4-5.7 1.5-9"/>
-                    <path d="M5 9V5.5c0-1 .5-1.5 1.5-1.5s2 .5 3 1.5"/>
-                    <path d="M19 9V5.5c0-1-.5-1.5-1.5-1.5s-2 .5-3 1.5"/>
+                    <path d="M8.5 14a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                    <path d="M15.5 14a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
+                    <path d="M20.5 9c.9 3.3.3 6-1.5 9-1.5 1.5-4 2.5-7 2.5s-5.5-1-7-2.5c-1.8-3-.4-5.7 1.5-9" />
+                    <path d="M5 9V5.5c0-1 .5-1.5 1.5-1.5s2 .5 3 1.5" />
+                    <path d="M19 9V5.5c0-1-.5-1.5-1.5-1.5s-2 .5-3 1.5" />
                 </svg>
                 Discord
             </a>
             <a href="https://twitter.com/" target="_blank" class="link-btn">
                 <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path d="M4 4l11.733 16h4.267l-11.733-16z"/>
-                    <path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772"/>
+                    <path d="M4 4l11.733 16h4.267l-11.733-16z" />
+                    <path d="M4 20l6.768-6.768m2.46-2.46l6.772-6.772" />
                 </svg>
                 Twitter/X
             </a>
             <a href="mailto:contact@undmg.dev" class="link-btn">
                 <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <rect x="2" y="4" width="20" height="16" rx="2"/>
-                    <path d="M22 6l-10 7L2 6"/>
+                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                    <path d="M22 6l-10 7L2 6" />
                 </svg>
                 Email
             </a>
@@ -916,8 +1101,8 @@
         });
 
         function animateGlow() {
-            glowX += (mouseX - glowX) * 0.1;
-            glowY += (mouseY - glowY) * 0.1;
+            glowX += (mouseX - glowX) * 0.08;
+            glowY += (mouseY - glowY) * 0.08;
             mouseGlow.style.left = glowX + 'px';
             mouseGlow.style.top = glowY + 'px';
             requestAnimationFrame(animateGlow);
@@ -959,7 +1144,7 @@
 
         // Smooth scroll for Safari
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+            anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
@@ -969,4 +1154,5 @@
         });
     </script>
 </body>
+
 </html>

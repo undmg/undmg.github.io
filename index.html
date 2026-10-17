@@ -4,1339 +4,292 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNDMG | Portfolio</title>
+    <title>UNDMG — Games, Tools &amp; Web Things</title>
+    <meta name="description"
+        content="Undmg's portfolio: Roblox games like Blokd!, Studio plugins, Python tools and web experiments — explained in plain English.">
+    <meta property="og:title" content="UNDMG — Portfolio">
+    <meta property="og:description" content="Roblox games, handy tools and web experiments, explained in plain English.">
+    <meta name="theme-color" content="#ebe5da">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-dark: #ffffff;
-            --bg-darker: #f4f4f5;
-            --bg-card: rgba(10, 10, 12, 0.7);
-            --accent-primary: #c54b4b;
-            --accent-neon: #ff5e45;
-            --accent-secondary: #8b3a3a;
-            --accent-glow: rgba(197, 75, 75, 0.3);
-            --accent-subtle: rgba(197, 75, 75, 0.1);
-            --gray-dark: #e4e4e7;
-            --gray-darker: #f4f4f5;
-            --text-primary: #09090b;
-            --text-secondary: #27272a;
-            --text-muted: #52525b;
-            --border-color: rgba(197, 75, 75, 0.4);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Rajdhani', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            cursor: default;
-        }
-
-        /* Fixed Background with Image */
-        .bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: url('bg.jpg') center center / cover no-repeat fixed;
-            overflow: hidden;
-            animation: breatheBg 15s ease-in-out infinite;
-        }
-
-        @keyframes breatheBg {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        .bg-overlay {
-            display: none;
-        }
-
-        .clouds {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .cloud-layer {
-            position: absolute;
-            width: 300%;
-            height: 300%;
-            top: -100%;
-            left: -100%;
-        }
-
-        .cloud-layer:nth-child(1) {
-            background:
-                radial-gradient(ellipse 40% 30% at 20% 30%, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 70%),
-                radial-gradient(ellipse 50% 35% at 70% 60%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.1) 45%, transparent 70%);
-            animation: cloudDrift1 120s linear infinite;
-            filter: blur(5px);
-        }
-
-        .cloud-layer:nth-child(2) {
-            background:
-                radial-gradient(ellipse 45% 30% at 80% 25%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.05) 40%, transparent 65%),
-                radial-gradient(ellipse 55% 40% at 25% 70%, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.05) 45%, transparent 70%);
-            animation: cloudDrift2 150s linear infinite;
-            filter: blur(8px);
-            opacity: 0.7;
-        }
-
-        .cloud-layer:nth-child(3) {
-            background:
-                radial-gradient(ellipse 60% 45% at 50% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 75%);
-            animation: cloudDrift3 180s linear infinite;
-            filter: blur(10px);
-            opacity: 0.5;
-        }
-
-        .cloud-layer:nth-child(4) {
-            display: none;
-        }
-
-        @keyframes cloudDrift1 {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(-25%, 15%) rotate(3deg);
-            }
-        }
-
-        @keyframes cloudDrift2 {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(20%, -30%) rotate(-2deg);
-            }
-        }
-
-        @keyframes cloudDrift3 {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(-40%, -20%) rotate(4deg);
-            }
-        }
-
-        @keyframes cloudDrift4 {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-
-            100% {
-                transform: translate(15%, 25%) rotate(-1deg);
-            }
-        }
-
-        /* Noise/Grain Overlay - Reduced */
-        .noise-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10001;
-            opacity: 0.02;
-            mix-blend-mode: multiply;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-
-
-
-
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 20px 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(to bottom, rgba(5, 5, 8, 0.95), transparent);
-            backdrop-filter: blur(5px);
-            border-bottom: none;
-        }
-
-        .nav-logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--accent-neon);
-            text-shadow: 0 0 20px var(--accent-glow), 0 0 40px var(--accent-glow);
-            letter-spacing: 3px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #d4d4d8;
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--accent-neon);
-            box-shadow: 0 0 10px var(--accent-neon), 0 0 20px var(--accent-neon);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent-neon);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Sections */
-        section {
-            min-height: 100vh;
-            padding: 120px 10%;
-            position: relative;
-        }
-
-        /* Hero Section */
-        .hero {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(3rem, 10vw, 8rem);
-            font-weight: 900;
-            letter-spacing: 10px;
-            margin-bottom: 20px;
-            color: var(--accent-neon);
-            text-shadow:
-                0 0 10px var(--accent-glow),
-                0 0 30px var(--accent-glow),
-                0 0 60px rgba(197, 75, 75, 0.3);
-            animation: neonPulse 3s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-
-            0%,
-            100% {
-                text-shadow:
-                    0 0 10px var(--accent-glow),
-                    0 0 30px var(--accent-glow),
-                    0 0 60px rgba(197, 75, 75, 0.3);
-            }
-
-            50% {
-                text-shadow:
-                    0 0 15px var(--accent-glow),
-                    0 0 40px var(--accent-glow),
-                    0 0 80px rgba(197, 75, 75, 0.4);
-            }
-        }
-
-        .hero-tagline {
-            font-size: clamp(1rem, 3vw, 1.5rem);
-            color: var(--text-muted);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-        }
-
-        .hero-tagline span {
-            color: var(--accent-neon);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .cyber-border {
-            position: relative;
-            padding: 15px 40px;
-            background: rgba(197, 75, 75, 0.05);
-            border: 1px solid var(--accent-primary);
-            box-shadow: 0 0 20px rgba(197, 75, 75, 0.2), inset 0 0 20px rgba(197, 75, 75, 0.05);
-            clip-path: polygon(0 0, calc(100% - 15px) 0, 100% 15px, 100% 100%, 15px 100%, 0 calc(100% - 15px));
-        }
-
-        .cyber-border::before {
-            content: '';
-            position: absolute;
-            top: -1px;
-            right: -1px;
-            width: 20px;
-            height: 20px;
-            background: var(--accent-neon);
-            box-shadow: 0 0 10px var(--accent-neon);
-            clip-path: polygon(0 0, 100% 0, 100% 100%);
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            animation: bounce 2s infinite;
-        }
-
-        .scroll-indicator span {
-            font-size: 0.8rem;
-            letter-spacing: 3px;
-            color: var(--text-muted);
-        }
-
-        .scroll-arrow {
-            width: 30px;
-            height: 30px;
-            border-right: 2px solid var(--accent-neon);
-            border-bottom: 2px solid var(--accent-neon);
-            transform: rotate(45deg);
-            box-shadow: 3px 3px 10px rgba(197, 75, 75, 0.3);
-        }
-
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateX(-50%) translateY(0);
-            }
-
-            40% {
-                transform: translateX(-50%) translateY(-10px);
-            }
-
-            60% {
-                transform: translateX(-50%) translateY(-5px);
-            }
-        }
-
-        /* Section Headers */
-        .section-header {
-            margin-bottom: 60px;
-            position: relative;
-        }
-
-        .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 5vw, 3rem);
-            font-weight: 700;
-            color: var(--accent-neon);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            display: inline-block;
-            text-shadow: 0 0 20px var(--accent-glow);
-        }
-
-        .section-title::before {
-            content: '//';
-            margin-right: 15px;
-            color: var(--accent-primary);
-            opacity: 0.6;
-        }
-
-        .section-line {
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent-primary), transparent);
-            margin-top: 15px;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        /* About Section */
-        .about-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: start;
-        }
-
-        .about-text {
-            font-size: 1.1rem;
-            line-height: 1.9;
-            color: var(--text-secondary);
-        }
-
-        .about-text p {
-            margin-bottom: 25px;
-        }
-
-        .about-text strong {
-            color: var(--accent-neon);
-            text-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .about-stats {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            padding: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
-            box-shadow: 0 0 10px var(--accent-neon);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 40px rgba(197, 75, 75, 0.2);
-            border-color: var(--accent-primary);
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--accent-neon);
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px var(--accent-glow);
-        }
-
-        .stat-label {
-            font-size: 0.9rem;
-            color: #a1a1aa;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Projects Section */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
-            cursor: default;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-card.clickable {
-            cursor: pointer;
-        }
-
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, transparent 60%, rgba(197, 75, 75, 0.15) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-        }
-
-        .project-card:hover::before {
-            opacity: 1;
-        }
-
-        .project-card:hover {
-            transform: scale(0.97);
-            box-shadow: 0 10px 40px rgba(197, 75, 75, 0.25);
-            border-color: var(--accent-neon);
-        }
-
-        .project-card.clickable:hover {
-            transform: scale(0.95);
-        }
-
-        .project-card:active {
-            transform: scale(0.93);
-        }
-
-        .project-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #1a1a20 0%, #0f0f12 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            color: var(--accent-primary);
-            opacity: 0.4;
-        }
-
-        .project-content {
-            padding: 30px;
-            position: relative;
-            z-index: 2;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .project-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: #e4e4e7;
-        }
-
-        .project-desc {
-            color: #a1a1aa;
-            line-height: 1.7;
-            margin-bottom: 20px;
-        }
-
-        .project-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: auto;
-        }
-
-        .tag {
-            padding: 5px 15px;
-            background: rgba(197, 75, 75, 0.1);
-            border: 1px solid var(--accent-secondary);
-            font-size: 0.75rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--accent-neon);
-        }
-
-        /* Media Section */
-        .media-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .media-item {
-            position: relative;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            border: 1px solid var(--border-color);
-            background: var(--bg-card);
-            transition: all 0.4s ease;
-        }
-
-        .media-item:hover {
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 30px rgba(197, 75, 75, 0.2);
-            transform: scale(1.02);
-        }
-
-        .media-item iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .media-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--bg-card) 0%, #15151a 100%);
-        }
-
-        .media-placeholder svg {
-            width: 50px;
-            height: 50px;
-            stroke: var(--accent-primary);
-            margin-bottom: 15px;
-            opacity: 0.6;
-        }
-
-        .media-placeholder span {
-            color: #a1a1aa;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-        }
-
-        .media-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 15px;
-            background: linear-gradient(to top, rgba(255, 255, 255, 0.95), transparent);
-            z-index: 2;
-        }
-
-        .media-caption h4 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-            color: var(--accent-neon);
-            margin-bottom: 5px;
-        }
-
-        .media-caption p {
-            font-size: 0.8rem;
-            color: #a1a1aa;
-        }
-
-        /* Links Section */
-        .links {
-            text-align: center;
-        }
-
-        .links-grid {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .link-btn {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 20px 40px;
-            background: transparent;
-            border: 1px solid var(--accent-primary);
-            color: var(--text-primary);
-            text-decoration: none;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(197, 75, 75, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .link-btn:hover::before {
-            left: 100%;
-        }
-
-        .link-btn:hover {
-            background: rgba(197, 75, 75, 0.2);
-            border-color: var(--accent-neon);
-            box-shadow: 0 0 30px rgba(197, 75, 75, 0.3);
-            transform: translateY(-3px);
-            color: var(--accent-neon);
-        }
-
-        .link-btn svg {
-            width: 24px;
-            height: 24px;
-            stroke: currentColor;
-            fill: none;
-        }
-
-        /* Footer */
-        footer {
-            padding: 40px;
-            text-align: center;
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-        }
-
-        footer span {
-            color: var(--accent-neon);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-
-        .mobile-menu-btn span {
-            width: 30px;
-            height: 2px;
-            background: var(--accent-neon);
-            box-shadow: 0 0 5px var(--accent-glow);
-            transition: all 0.3s ease;
-        }
-
-        /* Responsive */
-        @media (max-width: 968px) {
-            nav {
-                padding: 20px 30px;
-            }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
-                background: var(--bg-darker);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                transition: right 0.4s ease;
-                border-left: 1px solid var(--border-color);
-            }
-
-            .nav-links.active {
-                right: 0;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .about-content {
-                grid-template-columns: 1fr;
-            }
-
-            section {
-                padding: 80px 5%;
-            }
-
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .hero-title {
-                letter-spacing: 5px;
-            }
-
-            .stat-card {
-                padding: 20px;
-            }
-
-            .stat-number {
-                font-size: 2rem;
-            }
-        }
-
-        /* Animations on scroll */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Project Stories */
-        .stories {
-            padding: 100px 50px;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .stories-container {
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-            margin-top: 50px;
-        }
-
-        .story-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 40px;
-            backdrop-filter: blur(10px);
-        }
-
-        .story-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .story-icon {
-            font-size: 2.5rem;
-        }
-
-        .story-header h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            color: var(--accent-primary);
-        }
-
-        .story-timeline {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 40px;
-            position: relative;
-        }
-
-        /* Connecting line for desktop */
-        .story-timeline::before {
-            content: '';
-            position: absolute;
-            top: 25px;
-            /* Adjust based on dot position */
-            left: 20px;
-            right: 20px;
-            height: 2px;
-            background: linear-gradient(to right,
-                    var(--accent-primary) 0%,
-                    rgba(255, 255, 255, 0.1) 100%);
-            z-index: 0;
-            opacity: 0.3;
-        }
-
-        .story-phase {
-            position: relative;
-            z-index: 1;
-            padding-top: 20px;
-            /* Space for line/dot */
-        }
-
-        .phase-dot {
-            width: 12px;
-            height: 12px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-            position: absolute;
-            top: 20px;
-            /* Align with line */
-            left: 0;
-            box-shadow: 0 0 10px var(--accent-glow);
-        }
-
-        .story-phase h4 {
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1.2rem;
-            color: #8b2626;
-            /* Darker Rust */
-            margin: 15px 0 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .story-phase p {
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #111111;
-            /* Near Black */
-        }
-
-        @media (max-width: 900px) {
-            .story-timeline {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .story-timeline::before {
-                display: none;
-                /* Hide horizontal line on mobile */
-            }
-
-            /* Vertical line for mobile could be added here if desired */
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Fixed Background -->
-    <div class="bg-container">
-        <div class="clouds">
-            <div class="cloud-layer"></div>
-            <div class="cloud-layer"></div>
-            <div class="cloud-layer"></div>
-            <div class="cloud-layer"></div>
+    <div class="grain" aria-hidden="true"></div>
+
+    <!-- Reusable four-point star -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="spark" viewBox="0 0 24 24">
+            <path d="M12 0C12.6 8.2 15.8 11.4 24 12C15.8 12.6 12.6 15.8 12 24C11.4 15.8 8.2 12.6 0 12C8.2 11.4 11.4 8.2 12 0Z" />
+        </symbol>
+    </svg>
+
+    <!-- ============ COVER ============ -->
+    <header class="cover" id="top">
+        <nav class="masthead">
+            <a class="mast-logo" href="#top">UNDMG</a>
+            <ul>
+                <li><a href="#hello">Hello</a></li>
+                <li><a href="#work">Work</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <span class="mast-issue">Issue Nº 02 · 2026</span>
+        </nav>
+
+        <p class="cover-kicker">
+            I build the things I wish existed<br>
+            games, tools and strange little web experiments
+        </p>
+        <svg class="spark spark--tl" aria-hidden="true"><use href="#spark" /></svg>
+        <svg class="spark spark--tr" aria-hidden="true"><use href="#spark" /></svg>
+
+        <h1 class="cover-title" aria-label="Undmg">
+            <span class="ink">UND</span><span class="red">MG</span>
+            <svg class="spark spark--title" aria-hidden="true"><use href="#spark" /></svg>
+        </h1>
+
+        <div class="cover-band" aria-hidden="true">
+            <canvas class="ghost ghost--l"></canvas>
+            <canvas class="ghost ghost--r"></canvas>
         </div>
-    </div>
 
-    <!-- Noise Overlay -->
-    <div class="noise-overlay"></div>
+        <figure class="portrait" id="portrait">
+            <canvas class="portrait-canvas" role="img"
+                aria-label="Colour ASCII-art portrait of Undmg in a suit and tie, taking a mirror selfie"></canvas>
+        </figure>
 
-
-
-
-
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-logo">UNDMG</div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#hero">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#stories">Stories</a></li>
-            <li><a href="#links">Links</a></li>
-        </ul>
-        <div class="mobile-menu-btn" id="mobileMenuBtn">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="cover-side cover-side--l">
+            <p class="side-big">A PORTFOLIO<br>IN PRINT</p>
+            <p class="side-small">ROBLOX · PYTHON<br>WEB · AI-ASSISTED</p>
         </div>
-    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">UNDMG</h1>
-            <p class="hero-tagline">Developer <span>//</span> Creator <span>//</span> Innovator</p>
-            <div class="cyber-border">
-                <span style="font-size: 0.9rem; letter-spacing: 3px; color: var(--text-muted);">WELCOME TO MY DIGITAL
-                    REALM</span>
+        <div class="cover-side cover-side--r">
+            <p class="side-small">NOW PLAYING</p>
+            <p class="side-big">BLOKD!<br>ON ROBLOX</p>
+            <p class="side-small">@UNDMG</p>
+        </div>
+
+        <svg class="spark spark--ml" aria-hidden="true"><use href="#spark" /></svg>
+        <svg class="spark spark--br" aria-hidden="true"><use href="#spark" /></svg>
+
+        <p class="cover-bottom">
+            <span>Made</span>
+            <span>To Play</span>
+        </p>
+
+        <div class="cover-actions">
+            <a class="read-on" href="#hello"><span class="arrow" aria-hidden="true">↓</span> READ<br>THE ISSUE</a>
+        </div>
+    </header>
+
+    <!-- ============ 01 HELLO ============ -->
+    <section class="section hello" id="hello">
+        <div class="running-head"><span>UNDMG</span><span>Nº 01 — Hello</span><span>p. 02</span></div>
+
+        <div class="hello-grid">
+            <div class="hello-head reveal">
+                <p class="kicker">Nº 01 · Who is this</p>
+                <h2 class="headline">Hi. I'm <em>Undmg</em>.<br>I make things<br>people <span class="red">play</span>
+                    &amp;&nbsp;<span class="red">use</span>.</h2>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>SCROLL</span>
-            <div class="scroll-arrow"></div>
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="section-header fade-in">
-            <h2 class="section-title">About Me</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="about-content">
-            <div class="about-text fade-in">
-                <p>
-                    Hey, I'm <strong>Undmg</strong> — a developer who builds tools, games, and whatever else
-                    catches my interest. I work with <strong>Roblox/Lua</strong>, <strong>Python</strong>,
-                    and web technologies. Most of my projects are born from "I wish this existed" moments.
-                </p>
-                <p>
-                    I'm also big on <strong>AI-assisted development</strong>. I use tools like ChatGPT, Claude,
-                    and Gemini daily — not as a crutch, but as a multiplier. Knowing how to write effective prompts,
-                    break down complex problems, and guide AI to produce clean, working code is a skill I've refined
-                    over time. It's basically <strong>prompt engineering</strong> meets real development.
-                </p>
-                <p>
-                    My approach is simple: <strong>build fast, iterate faster</strong>. I care more about shipping
-                    something useful than making it perfect on the first try. Most of my tools — like
-                    <strong>RBXL to Text Tool</strong> and various other useful tools — came from solving my own
-                    problems
-                    and then sharing them with others.
-                </p>
-                <p>
-                    When I'm not coding, I'm probably browsing dev tools, messing with new AI models,
-                    or procrastinating on Discord. If you've got a project idea or just want to chat,
-                    feel free to reach out.
-                </p>
+            <div class="hello-body reveal">
+                <p class="dropcap">I build games on Roblox, small tools that save people time, and the odd
+                    experiment for the web. Almost everything starts the same way: I want something, it doesn't
+                    exist yet, so I make it.</p>
+                <p>Most of my work is in <strong>Luau</strong> (Roblox's version of Lua), <strong>Python</strong>
+                    and plain <strong>HTML, CSS and JavaScript</strong>. I also use AI tools like Claude, ChatGPT and
+                    Gemini every day. Not so they do the thinking for me, but so I can move faster: I break a problem
+                    into pieces, explain it clearly, and check what comes back.</p>
+                <p>My rule is simple: <strong>ship it, then make it better.</strong> A finished thing that people
+                    can actually use beats a perfect thing that only lives on my computer.</p>
             </div>
-            <div class="about-stats fade-in">
-                <div class="stat-card">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">5+</div>
-                    <div class="stat-label">Years Exp</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Users</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">∞</div>
-                    <div class="stat-label">Passion</div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section class="projects" id="projects">
-        <div class="section-header fade-in">
-            <h2 class="section-title">Projects</h2>
-            <div class="section-line"></div>
-        </div>
-        <div class="projects-grid">
-            <div class="project-card clickable fade-in"
-                onclick="window.open('https://github.com/undmg/rbxl-to-text-tool', '_blank')">
-                <div class="project-image"
-                    style="background: url('rbxl_tool.png') center top / cover no-repeat; opacity: 1;"></div>
-                <div class="project-content">
-                    <h3 class="project-title">RBXL to Text Tool</h3>
-                    <p class="project-desc">A powerful tool for extracting scripts and data from Roblox place files.
-                        Export to TXT, LUA, or LUAU with Rojo compatibility.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">PyQt5</span>
-                        <span class="tag">Roblox</span>
+            <aside class="toolbox reveal" aria-label="What I use">
+                <p class="kicker">The toolbox</p>
+                <dl>
+                    <div>
+                        <dt>Games</dt>
+                        <dd>Roblox Studio, Luau</dd>
                     </div>
-                </div>
-            </div>
-            <div class="project-card fade-in">
-                <div class="project-image">🧩</div>
-                <div class="project-content">
-                    <h3 class="project-title">Blokd!</h3>
-                    <p class="project-desc">A modernized, fast-paced Tetris-like puzzle game focusing on reflexes and
-                        flow. Features minimal design and score-attack gameplay.</p>
-                    <div class="project-desc" style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">
-                        <em>Status: Archived (Completed Core Gameplay)</em>
+                    <div>
+                        <dt>Tools</dt>
+                        <dd>Python, PyQt5, Studio plugins</dd>
                     </div>
-                    <div class="project-tags">
-                        <span class="tag">Puzzle</span>
-                        <span class="tag">Reflex</span>
-                        <span class="tag">Archived</span>
+                    <div>
+                        <dt>Web</dt>
+                        <dd>HTML, CSS, JavaScript, Three.js</dd>
                     </div>
-                </div>
-            </div>
-            <div class="project-card clickable fade-in"
-                onclick="window.open('https://undmg.github.io/entropy', '_blank')">
-                <div class="project-image"
-                    style="background: url('entropy_preview.png') center center / cover no-repeat; opacity: 1;"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Entropy Experience</h3>
-                    <p class="project-desc">Interactive 3D WebGL audio visualizer exploring themes of chaos and order.
-                        Features real-time frequency analysis and reactive particle systems.</p>
-                    <div class="project-tags">
-                        <span class="tag">Three.js</span>
-                        <span class="tag">WebGL</span>
-                        <span class="tag">Audio</span>
+                    <div>
+                        <dt>Speed&nbsp;up</dt>
+                        <dd>Claude, ChatGPT, Gemini</dd>
                     </div>
-                </div>
-            </div>
-            <div class="project-card clickable fade-in"
-                onclick="window.open('https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs', '_blank')">
-                <div class="project-image"
-                    style="background: url('rig_closet.png') center top / cover no-repeat; opacity: 1;"></div>
-                <div class="project-content">
-                    <h3 class="project-title">Rig Closet</h3>
-                    <p class="project-desc">Studio rig catalog helper plugin. Streamlines your workflow by providing
-                        quick access to your rig collection.</p>
-                    <div class="project-tags">
-                        <span class="tag">Roblox</span>
-                        <span class="tag">Plugin</span>
-                        <span class="tag">Lua</span>
-                    </div>
-                </div>
-            </div>
+                </dl>
+                <blockquote>“If it annoys me twice, I build a tool for it.”</blockquote>
+            </aside>
         </div>
     </section>
 
-    <!-- Project Stories Section -->
-    <section class="stories" id="stories">
-        <div class="section-header fade-in">
-            <h2 class="section-title">Project Stories</h2>
-            <div class="section-line"></div>
+    <!-- ============ 02 WORK ============ -->
+    <section class="section work" id="work">
+        <div class="running-head"><span>UNDMG</span><span>Nº 02 — The Work</span><span>p. 03</span></div>
+
+        <div class="work-intro reveal">
+            <p class="kicker">Nº 02 · Selected projects</p>
+            <h2 class="headline headline--xl">The <em>Work</em></h2>
+            <p class="dek">Five things I've made, what they do, and why they exist. No jargon, promise.</p>
         </div>
 
-        <div class="stories-container">
-
-            <!-- Story 1: Blokd! -->
-            <div class="story-card fade-in">
-                <div class="story-header">
-                    <div class="story-icon">🧩</div>
-                    <h3>Blokd!</h3>
-                </div>
-                <div class="story-timeline">
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Spark</h4>
-                        <p>I wanted a puzzle game that wasn't about thinking, but about <strong>feeling</strong>. A
-                            modernization of the classic block-stacking genre focused entirely on reflexes, speed, and
-                            inducing a "flow state."</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Process</h4>
-                        <p>I built the core mechanics with a minimal design philosophy. Every visual element was
-                            stripped back to prevent distraction, ensuring the player's focus remained 100% on the board
-                            and the rhythm.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Outcome</h4>
-                        <p>The core gameplay is complete and fully functional. However, due to resource constraints, it
-                            remains an <strong>Archived</strong> project for now—a solid foundation waiting for the
-                            right time to be expanded.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Story 2: Entropy -->
-            <div class="story-card fade-in">
-                <div class="story-header">
-                    <div class="story-icon">🌌</div>
-                    <h3>Entropy</h3>
-                </div>
-                <div class="story-timeline">
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Spark</h4>
-                        <p>Curiosity about bringing high-fidelity audio visualization to the web. I wanted to see if I
-                            could create a "music video" experience that runs in real-time in the browser.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Process</h4>
-                        <p>Leveraging <strong>Three.js</strong> and WebGL, I experimented with reactive particle systems
-                            and shaders. The challenge was balancing visual fidelity (bloom, refraction) with
-                            performance.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Outcome</h4>
-                        <p>A completely immersive 3D experience. It features continuous color cycling, reactive geometry
-                            that "spikes" with bass, and a custom "Twilight" aesthetic that reacts to the music's
-                            energy.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Story 3: RBXL to Text Tool -->
-            <div class="story-card fade-in">
-                <div class="story-header">
-                    <div class="story-icon">📝</div>
-                    <h3>RBXL to Text Tool</h3>
-                </div>
-                <div class="story-timeline">
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Spark</h4>
-                        <p>There was a severe lack of resources for adapting AI to Roblox code. Most LLMs couldn't "see"
-                            inside binary place files, making it hard to train models or get context-aware help.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Process</h4>
-                        <p>I developed a private internal tool using <strong>Python</strong> to extract scripts and
-                            object data into clean, readable text. It became essential for my own AI-assisted workflows.
-                        </p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Outcome</h4>
-                        <p>Realizing its potential, I released it publicly. It now bridges the gap between Roblox Studio
-                            and modern AI tools, allowing developers to easily feed their codebase to LLMs.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Story 4: Rig Closet -->
-            <div class="story-card fade-in">
-                <div class="story-header">
-                    <div class="story-icon">👕</div>
-                    <h3>Rig Closet</h3>
-                </div>
-                <div class="story-timeline">
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Spark</h4>
-                        <p>Frustration. Roblox Studio's native options for rig customization were extremely limited,
-                            slowing down the workflow for character artists and animators.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Process</h4>
-                        <p>I built a <strong>Studio Plugin</strong> to bypass these restrictions. The goal was simple:
-                            instant access to a diverse library of rigs without leaving the editor.</p>
-                    </div>
-                    <div class="story-phase">
-                        <div class="phase-dot"></div>
-                        <h4>The Outcome</h4>
-                        <p>A streamlined workflow tool that saves hours of manual setup time, proving that sometimes the
-                            best tools come from just wanting to fix your own annoyance.</p>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- Links Section -->
-    <section class="links" id="links">
-        <div class="section-header fade-in">
-            <h2 class="section-title">Connect</h2>
-            <div class="section-line" style="margin: 15px auto 0; max-width: 200px;"></div>
-        </div>
-        <div class="links-grid fade-in">
-            <a href="https://github.com/undmg" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path
-                        d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                </svg>
-                GitHub
+        <!-- Cover story -->
+        <article class="feature reveal">
+            <a class="shot shot--feature" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
+                rel="noopener">
+                <img src="img/blokd.jpg" alt="Blokd! promo art: a Roblox avatar in front of a glowing 8×8 puzzle board"
+                    loading="lazy">
+                <span class="shot-tag">Cover story</span>
             </a>
-            <a href="https://www.youtube.com/@hwidban" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path
-                        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z" />
-                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" />
-                </svg>
-                YouTube
-            </a>
-            <a href="https://www.tiktok.com/@hwid.ban" target="_blank" class="link-btn">
-                <svg viewBox="0 0 24 24" stroke-width="1.5">
-                    <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
-                </svg>
-                TikTok
-            </a>
-        </div>
-        <div class="discord-username fade-in" style="margin-top: 40px; text-align: center;">
-            <div
-                style="display: inline-flex; align-items: center; gap: 20px; padding: 20px 40px; background: rgba(88, 101, 242, 0.15); border: 2px solid #5865F2; border-radius: 10px;">
-                <svg width="48" height="48" viewBox="0 0 127.14 96.36" fill="#5865F2">
-                    <path
-                        d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z" />
-                </svg>
-                <div style="text-align: left;">
-                    <span
-                        style="color: #71717a; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;">Discord</span>
-                    <p
-                        style="font-family: 'Orbitron', sans-serif; font-size: 1.8rem; font-weight: 700; color: #5865F2; margin-top: 4px; text-shadow: 0 0 20px rgba(88, 101, 242, 0.5);">
-                        undmg</p>
+
+            <div class="feature-text">
+                <p class="kicker"><span class="num">01</span> Roblox game · Live</p>
+                <h3 class="feature-title">Blokd!</h3>
+                <p class="dek">Drag, drop, clear. A block puzzle game where the fun is in your hands, not just your
+                    head.</p>
+
+                <div class="qa">
+                    <h4>What is it?</h4>
+                    <p>You drag block pieces onto an 8×8 board. Fill a whole row or column and it clears. Clear
+                        several in a row and you build a combo, and combos are where the big scores are.</p>
+                    <h4>Why I made it</h4>
+                    <p>I wanted a puzzle game you play on feel. Quick eyes, quick hands, and that “in the zone”
+                        rhythm, instead of sitting there thinking for ages.</p>
+                    <h4>What's inside</h4>
+                    <ul class="ticks">
+                        <li><b>Solo</b> — beat your own best score.</li>
+                        <li><b>Co-op</b> — up to 4 friends share one board and take turns.</li>
+                        <li><b>Duels</b> — 1v1, and your clears send junk blocks to your rival.</li>
+                        <li><b>Chaos Mode &amp; events</b> — frozen blocks, lava, conveyor belts, even bosses.</li>
+                        <li><b>Style</b> — 20 themed worlds, 30+ block skins, 60+ emotes.</li>
+                        <li><b>Progress</b> — daily quests, a season pass, a prestige shop and leaderboards.</li>
+                    </ul>
+                </div>
+
+                <div class="feature-foot">
+                    <a class="btn" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
+                        rel="noopener">Play it on Roblox <span aria-hidden="true">↗</span></a>
+                    <p class="code-chip">Free code <code>RebornWithRelease</code><br><small>Redeem in the shop for
+                            the Night City theme</small></p>
                 </div>
             </div>
+        </article>
+
+        <!-- The rest -->
+        <div class="projects">
+            <article class="project reveal">
+                <a class="shot" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">
+                    <img src="img/rbxl-tool.png" alt="Screenshot of the RBXL to Text Tool desktop app" loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">02</span> Desktop app · Open source</p>
+                <h3 class="project-title">RBXL to Text Tool</h3>
+                <p><strong>In short:</strong> Roblox saves games in a file that AI tools can't read. This app opens
+                    that file and pulls out every script and object as plain text you can paste anywhere.</p>
+                <p><strong>Why:</strong> I wanted AI to help with my Roblox code, but it couldn't see inside my game.
+                    I built this for myself, it turned out useful, so I made it public. It exports to TXT, LUA or
+                    LUAU and works with Rojo.</p>
+                <p class="tags"><span>Python</span><span>PyQt5</span><span>Roblox</span></p>
+                <a class="more" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">See
+                    it on GitHub ↗</a>
+            </article>
+
+            <article class="project reveal">
+                <a class="shot shot--tall"
+                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
+                    target="_blank" rel="noopener">
+                    <img src="img/rig-closet.png" alt="Rig Closet plugin window searching the avatar catalog for glasses"
+                        loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">03</span> Roblox Studio plugin</p>
+                <h3 class="project-title">Rig Closet</h3>
+                <p><strong>In short:</strong> a wardrobe for Roblox Studio. Search the avatar shop and put clothes,
+                    hair and accessories on any character rig with one click, without leaving Studio.</p>
+                <p><strong>Why:</strong> dressing up rigs in Studio was slow and fiddly, and it annoyed me. Now it
+                    saves animators and builders a lot of clicking.</p>
+                <p class="tags"><span>Luau</span><span>Plugin</span><span>Studio</span></p>
+                <a class="more"
+                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
+                    target="_blank" rel="noopener">Get it on the Creator Store ↗</a>
+            </article>
+
+            <article class="project reveal">
+                <a class="shot" href="https://undmg.github.io/entropy" target="_blank" rel="noopener">
+                    <img src="img/entropy.jpg" alt="Entropy: glowing 3D shapes reacting to music" loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">04</span> Web experiment</p>
+                <h3 class="project-title">Entropy</h3>
+                <p><strong>In short:</strong> a music visualizer that runs in your browser. A 3D scene listens to
+                    the song and moves with it: shapes spike on the bass and the colours shift with the energy.</p>
+                <p><strong>Why:</strong> I wanted to see if a browser could feel like a live music video. Turns out
+                    it can, if you're careful about speed.</p>
+                <p class="tags"><span>Three.js</span><span>WebGL</span><span>Audio</span></p>
+                <a class="more" href="https://undmg.github.io/entropy" target="_blank" rel="noopener">Turn the
+                    volume up ↗</a>
+            </article>
+
+            <article class="project reveal">
+                <a class="shot" href="https://undmg.github.io/frostfall/" target="_blank" rel="noopener">
+                    <img src="img/frostfall.jpg" alt="Frostfall: a dark castle under a full moon in the snow"
+                        loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">05</span> Web experiment</p>
+                <h3 class="project-title">Frostfall</h3>
+                <p><strong>In short:</strong> a website you scroll through like a film. You start outside a castle
+                    in the snow, and scrolling walks you through the gate, where the cold blue turns to firelight.
+                </p>
+                <p><strong>Why:</strong> to see how far a page can go with zero libraries, just HTML, CSS and
+                    JavaScript.</p>
+                <p class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span></p>
+                <a class="more" href="https://undmg.github.io/frostfall/" target="_blank" rel="noopener">Walk
+                    through the gate ↗</a>
+            </article>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2026 <span>UNDMG</span> // All Rights Reserved</p>
-    </footer>
+    <!-- ============ 03 CONTACT ============ -->
+    <section class="section contact" id="contact">
+        <div class="running-head running-head--light"><span>UNDMG</span><span>Nº 03 — Say hi</span><span>p. 04</span></div>
 
-    <script>
+        <div class="contact-inner">
+            <p class="kicker kicker--light">Nº 03 · Get in touch</p>
+            <h2 class="contact-title reveal">Got an idea?<br><em>Let's build it.</em></h2>
+            <p class="contact-dek reveal">The quickest way to reach me is Discord. You'll also find my code on GitHub
+                and shorter stuff on YouTube and TikTok.</p>
 
+            <ul class="links reveal">
+                <li><button type="button" data-copy="undmg"><span>Discord</span><b>undmg</b><i
+                            class="hint">click to copy</i></button></li>
+                <li><a href="https://github.com/undmg" target="_blank" rel="noopener"><span>GitHub</span><b>@undmg</b><i
+                            aria-hidden="true">↗</i></a></li>
+                <li><a href="https://www.youtube.com/@hwidban" target="_blank"
+                        rel="noopener"><span>YouTube</span><b>@hwidban</b><i aria-hidden="true">↗</i></a></li>
+                <li><a href="https://www.tiktok.com/@hwid.ban" target="_blank"
+                        rel="noopener"><span>TikTok</span><b>@hwid.ban</b><i aria-hidden="true">↗</i></a></li>
+            </ul>
+        </div>
 
-        // Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
+        <footer class="colophon">
+            <span>© 2026 UNDMG</span>
+            <span>Set in Instrument Serif &amp; Archivo · Portrait printed in ASCII</span>
+            <a href="#top">Back to the cover ↑</a>
+        </footer>
+    </section>
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-        });
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-        // Close mobile menu on link click
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-            });
-        });
-
-        // Fade in on scroll
-        const fadeElements = document.querySelectorAll('.fade-in');
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        fadeElements.forEach(el => observer.observe(el));
-
-        // Smooth scroll for Safari
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+    <script src="js/portrait-data.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

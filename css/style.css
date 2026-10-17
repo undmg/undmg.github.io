@@ -612,10 +612,55 @@ a {
     align-items: start;
 }
 
-.shot--feature {
-    aspect-ratio: 16 / 9;
+.feature-media {
     position: sticky;
     top: 24px;
+    display: grid;
+    gap: 22px;
+}
+
+.shot--feature {
+    aspect-ratio: 16 / 9;
+}
+
+/* the vertical YouTube Short sits beside its caption */
+.trailer {
+    display: grid;
+    grid-template-columns: minmax(180px, 250px) 1fr;
+    gap: 22px;
+    align-items: center;
+    margin: 0;
+}
+
+.trailer-frame {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+}
+
+.trailer-frame iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.trailer figcaption p {
+    color: var(--ink-2);
+    margin-bottom: 0.6em;
+}
+
+.trailer .kicker {
+    margin-bottom: 8px;
+}
+
+.trailer-title {
+    font-family: var(--serif);
+    font-size: clamp(30px, 3vw, 44px);
+    line-height: 1;
+    color: var(--ink) !important;
 }
 
 .feature-title {
@@ -939,7 +984,7 @@ a {
         grid-template-columns: 1fr;
     }
 
-    .shot--feature {
+    .feature-media {
         position: relative;
         top: 0;
     }
@@ -1040,6 +1085,11 @@ a {
 
     .work-intro {
         grid-template-columns: 1fr;
+    }
+
+    .trailer {
+        grid-template-columns: minmax(150px, 46%) 1fr;
+        gap: 16px;
     }
 
     .running-head span:nth-child(3) {

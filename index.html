@@ -146,12 +146,29 @@
 
         <!-- Cover story -->
         <article class="feature reveal">
-            <a class="shot shot--feature" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
-                rel="noopener">
-                <img src="img/blokd.jpg" alt="Blokd! promo art: a Roblox avatar in front of a glowing 8×8 puzzle board"
-                    loading="lazy">
-                <span class="shot-tag">Cover story</span>
-            </a>
+            <div class="feature-media">
+                <a class="shot shot--feature" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
+                    rel="noopener">
+                    <img src="img/blokd.jpg" alt="Blokd! promo art: a Roblox avatar in front of a glowing 8×8 puzzle board"
+                        loading="lazy">
+                    <span class="shot-tag">Cover story</span>
+                </a>
+                <figure class="trailer">
+                    <div class="trailer-frame">
+                        <iframe src="https://www.youtube-nocookie.com/embed/T8aqdRzZVvM?rel=0&amp;playsinline=1"
+                            title="BLOKD! – Official Trailer (YouTube)" loading="lazy"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <figcaption>
+                        <p class="kicker">Watch · YouTube Short</p>
+                        <p class="trailer-title">The official trailer</p>
+                        <p>A quick look at Blokd! in action: drag, drop, clear and chain those combos.</p>
+                        <a class="more" href="https://www.youtube.com/shorts/T8aqdRzZVvM" target="_blank"
+                            rel="noopener">Watch on YouTube ↗</a>
+                    </figcaption>
+                </figure>
+            </div>
 
             <div class="feature-text">
                 <p class="kicker"><span class="num">01</span> Roblox game · Live</p>
@@ -189,47 +206,12 @@
         <!-- The rest -->
         <div class="projects">
             <article class="project reveal">
-                <a class="shot" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">
-                    <img src="img/rbxl-tool.png" alt="Screenshot of the RBXL to Text Tool desktop app" loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">02</span> Desktop app · Open source</p>
-                <h3 class="project-title">RBXL to Text Tool</h3>
-                <p><strong>In short:</strong> Roblox saves games in a file that AI tools can't read. This app opens
-                    that file and pulls out every script and object as plain text you can paste anywhere.</p>
-                <p><strong>Why:</strong> I wanted AI to help with my Roblox code, but it couldn't see inside my game.
-                    I built this for myself, it turned out useful, so I made it public. It exports to TXT, LUA or
-                    LUAU and works with Rojo.</p>
-                <p class="tags"><span>Python</span><span>PyQt5</span><span>Roblox</span></p>
-                <a class="more" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">See
-                    it on GitHub ↗</a>
-            </article>
-
-            <article class="project reveal">
-                <a class="shot shot--tall"
-                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
-                    target="_blank" rel="noopener">
-                    <img src="img/rig-closet.png" alt="Rig Closet plugin window searching the avatar catalog for glasses"
-                        loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">03</span> Roblox Studio plugin</p>
-                <h3 class="project-title">Rig Closet</h3>
-                <p><strong>In short:</strong> a wardrobe for Roblox Studio. Search the avatar shop and put clothes,
-                    hair and accessories on any character rig with one click, without leaving Studio.</p>
-                <p><strong>Why:</strong> dressing up rigs in Studio was slow and fiddly, and it annoyed me. Now it
-                    saves animators and builders a lot of clicking.</p>
-                <p class="tags"><span>Luau</span><span>Plugin</span><span>Studio</span></p>
-                <a class="more"
-                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
-                    target="_blank" rel="noopener">Get it on the Creator Store ↗</a>
-            </article>
-
-            <article class="project reveal">
                 <a class="shot" href="https://undmg.github.io/entropy/" target="_blank" rel="noopener">
                     <img src="img/oracle.jpg"
                         alt="Oracle.exe: a retro computer desktop under a pale sky with a giant eye, running the oracle's terminal"
                         loading="lazy">
                 </a>
-                <p class="kicker"><span class="num">04</span> Web experiment · Greek myth × weirdcore</p>
+                <p class="kicker"><span class="num">02</span> Web experiment · Greek myth × weirdcore</p>
                 <h3 class="project-title">Oracle.exe</h3>
                 <p><strong>In short:</strong> the Oracle of Delphi lives inside a haunted old computer. Type any
                     question and she answers with a cryptic prophecy. Ask the same thing twice in a day and you get
@@ -248,7 +230,7 @@
                         alt="Golden Hour: a girl in a yellow t-shirt sitting on a rooftop ledge above a hazy golden city, with a game-style main menu"
                         loading="lazy">
                 </a>
-                <p class="kicker"><span class="num">05</span> Web experiment · "Now" page</p>
+                <p class="kicker"><span class="num">03</span> Web experiment · "Now" page</p>
                 <h3 class="project-title">Golden Hour</h3>
                 <p><strong>In short:</strong> my "now" page, built like a video game main menu. A girl sits on a
                     rooftop above a hazy golden city; the menu shows what I’m working on, my devlog
@@ -259,6 +241,41 @@
                 <p class="tags"><span>Three.js</span><span>WebGL</span><span>Web Audio</span></p>
                 <a class="more" href="https://undmg.github.io/golden-hour/" target="_blank" rel="noopener">Sit on the
                     rooftop ↗</a>
+            </article>
+
+            <article class="project reveal">
+                <a class="shot" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">
+                    <img src="img/rbxl-tool.png" alt="Screenshot of the RBXL to Text Tool desktop app" loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">04</span> Desktop app · Open source</p>
+                <h3 class="project-title">RBXL to Text Tool</h3>
+                <p><strong>In short:</strong> Roblox saves games in a file that AI tools can't read. This app opens
+                    that file and pulls out every script and object as plain text you can paste anywhere.</p>
+                <p><strong>Why:</strong> I wanted AI to help with my Roblox code, but it couldn't see inside my game.
+                    I built this for myself, it turned out useful, so I made it public. It exports to TXT, LUA or
+                    LUAU and works with Rojo.</p>
+                <p class="tags"><span>Python</span><span>PyQt5</span><span>Roblox</span></p>
+                <a class="more" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">See
+                    it on GitHub ↗</a>
+            </article>
+
+            <article class="project reveal">
+                <a class="shot shot--tall"
+                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
+                    target="_blank" rel="noopener">
+                    <img src="img/rig-closet.png" alt="Rig Closet plugin window searching the avatar catalog for glasses"
+                        loading="lazy">
+                </a>
+                <p class="kicker"><span class="num">05</span> Roblox Studio plugin</p>
+                <h3 class="project-title">Rig Closet</h3>
+                <p><strong>In short:</strong> a wardrobe for Roblox Studio. Search the avatar shop and put clothes,
+                    hair and accessories on any character rig with one click, without leaving Studio.</p>
+                <p><strong>Why:</strong> dressing up rigs in Studio was slow and fiddly, and it annoyed me. Now it
+                    saves animators and builders a lot of clicking.</p>
+                <p class="tags"><span>Luau</span><span>Plugin</span><span>Studio</span></p>
+                <a class="more"
+                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
+                    target="_blank" rel="noopener">Get it on the Creator Store ↗</a>
             </article>
         </div>
     </section>

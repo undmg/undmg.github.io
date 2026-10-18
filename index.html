@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
     <meta charset="UTF-8">
@@ -7,412 +7,538 @@
     <title>UNDMG — Games, Tools &amp; Web Things</title>
     <meta name="description"
         content="Undmg's portfolio: Roblox games like Blokd!, Studio plugins, Python tools and web experiments — explained in plain English.">
-    <meta property="og:title" content="UNDMG — Portfolio">
+    <meta property="og:title" content="UNDMG — The Rockport Blacklist">
     <meta property="og:description" content="Roblox games, handy tools and web experiments, explained in plain English.">
-    <meta name="theme-color" content="#ebe5da">
+    <meta name="theme-color" content="#0b0c08">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,700;0,800;0,900;1,800&family=Archivo+Narrow:wght@500;700&family=Sedgwick+Ave+Display&family=UnifrakturCook:wght@700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=b695473d">
+    <link rel="stylesheet" href="css/style.css?v=a3cdc7af">
 </head>
 
 <body>
+    <!-- shared SVG filters: ragged ink edges + film grain -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <filter id="ink-edge">
+            <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" />
+            <feDisplacementMap in="SourceGraphic" scale="38" />
+        </filter>
+    </svg>
     <div class="grain" aria-hidden="true"></div>
 
-    <!-- Reusable four-point star -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <symbol id="spark" viewBox="0 0 24 24">
-            <path d="M12 0C12.6 8.2 15.8 11.4 24 12C15.8 12.6 12.6 15.8 12 24C11.4 15.8 8.2 12.6 0 12C8.2 11.4 11.4 8.2 12 0Z" />
-        </symbol>
-    </svg>
+    <!-- ============ CURSOR ============ -->
+    <div class="cursor" id="cursor" aria-hidden="true">
+        <span class="cursor-box"><i></i><i></i><i></i><i></i></span>
+        <span class="cursor-dot"></span>
+        <span class="cursor-label">select</span>
+    </div>
 
-    <!-- ============ COVER ============ -->
-    <header class="cover" id="top">
-        <nav class="masthead">
-            <a class="mast-logo" href="#top">UNDMG</a>
-            <ul>
-                <li><a href="#hello">Hello</a></li>
-                <li><a href="#work">Work</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <span class="mast-issue">Issue Nº 02 · 2026</span>
+    <!-- ============ LOADER (shown by JS only) ============ -->
+    <div class="loader" id="loader" hidden>
+        <div class="smoke" aria-hidden="true"></div>
+        <div class="splat" data-splat="11" data-splat-mode="olive" aria-hidden="true"></div>
+        <div class="loader-mid">
+            <p class="loader-tag">Undmg</p>
+            <p class="loader-bl">Most Wanted</p>
+        </div>
+        <div class="loader-low">
+            <div class="loader-bar"><span id="loader-fill"></span></div>
+            <p class="loader-tip"><b>tip:</b> <span id="loader-tip"></span></p>
+        </div>
+        <div class="keybar">
+            <button type="button" class="key-btn" id="loader-start" disabled><kbd>Click</kbd><span>Loading…</span></button>
+        </div>
+    </div>
+
+    <!-- ============ HUD ============ -->
+    <header class="hud">
+        <a class="hud-logo" href="#top" data-sfx>Undmg</a>
+        <nav aria-label="Sections">
+            <a href="#bio" data-sfx>Bio</a>
+            <a href="#blacklist" data-sfx>Blacklist</a>
+            <a href="#pursuit" data-sfx>Pursuit</a>
         </nav>
-
-        <p class="cover-kicker">
-            I build the things I wish existed<br>
-            games, tools and strange little web experiments
-        </p>
-        <svg class="spark spark--tl" aria-hidden="true"><use href="#spark" /></svg>
-        <svg class="spark spark--tr" aria-hidden="true"><use href="#spark" /></svg>
-
-        <h1 class="cover-title" aria-label="Undmg">
-            <span class="ink">UND</span><span class="red">MG</span>
-            <svg class="spark spark--title" aria-hidden="true"><use href="#spark" /></svg>
-        </h1>
-
-        <div class="cover-band" aria-hidden="true">
-            <canvas class="ghost ghost--l"></canvas>
-            <canvas class="ghost ghost--r"></canvas>
-        </div>
-
-        <figure class="portrait" id="portrait">
-            <canvas class="portrait-canvas" role="img"
-                aria-label="Colour ASCII-art portrait of Undmg in a suit and tie, taking a mirror selfie"></canvas>
-        </figure>
-
-        <div class="cover-side cover-side--l">
-            <p class="side-big">A PORTFOLIO<br>IN PRINT</p>
-            <p class="side-small">ROBLOX · PYTHON<br>WEB · AI-ASSISTED</p>
-        </div>
-
-        <div class="cover-side cover-side--r">
-            <p class="side-small">NOW PLAYING</p>
-            <p class="side-big">BLOKD!<br>ON ROBLOX</p>
-            <p class="side-small">@UNDMG</p>
-        </div>
-
-        <svg class="spark spark--ml" aria-hidden="true"><use href="#spark" /></svg>
-        <svg class="spark spark--br" aria-hidden="true"><use href="#spark" /></svg>
-
-        <p class="cover-bottom">
-            <span>Made</span>
-            <span>To Play</span>
-        </p>
-
-        <div class="cover-actions">
-            <a class="read-on" href="#hello"><span class="arrow" aria-hidden="true">↓</span> READ<br>THE ISSUE</a>
+        <div class="hud-right">
+            <div class="heat" id="heat" aria-hidden="true"><span class="heat-label">Heat</span><span class="heat-bars"><i></i><i></i><i></i><i></i><i></i></span></div>
+            <div class="bounty" id="bounty" aria-hidden="true"><small>Bounty</small><span>0</span></div>
+            <button type="button" class="mute" id="mute" data-sfx data-cursor="audio" aria-pressed="false">SFX on</button>
         </div>
     </header>
 
-    <!-- ============ 01 HELLO ============ -->
-    <section class="section hello" id="hello">
-        <div class="running-head"><span>UNDMG</span><span>Nº 01 — Hello</span><span>p. 02</span></div>
+    <main id="top">
+        <!-- ============ COVER: blacklist #1 ============ -->
+        <section class="cover" data-rival>
+            <div class="cover-sky" aria-hidden="true"></div>
+            <svg class="skyline" id="skyline" aria-hidden="true" preserveAspectRatio="xMidYMax slice"></svg>
+            <div class="smoke" aria-hidden="true"></div>
+            <div class="splat" data-splat="3" data-splat-mode="black" aria-hidden="true"></div>
 
-        <div class="hello-grid">
-            <div class="hello-head reveal">
-                <p class="kicker">Nº 01 · Who is this</p>
-                <h2 class="headline">Hi. I'm <em>Undmg</em>.<br>I make things<br>people <span class="red">play</span>
-                    &amp;&nbsp;<span class="red">use</span>.</h2>
+            <div class="masthead">
+                <span class="mast-meta">Issue Nº 03 · 2026</span>
+                <p class="mast-title">The Rockport Blacklist</p>
+                <span class="mast-meta">Roblox · Python · Web</span>
             </div>
 
-            <div class="hello-body reveal">
-                <p class="dropcap">I build games on Roblox, small tools that save people time, and the odd
-                    experiment for the web. Almost everything starts the same way: I want something, it doesn't
-                    exist yet, so I make it.</p>
-                <p>Most of my work is in <strong>Luau</strong> (Roblox's version of Lua), <strong>Python</strong>
-                    and plain <strong>HTML, CSS and JavaScript</strong>. I also use AI tools like Claude, ChatGPT and
-                    Gemini every day. Not so they do the thinking for me, but so I can move faster: I break a problem
-                    into pieces, explain it clearly, and check what comes back.</p>
-                <p>My rule is simple: <strong>ship it, then make it better.</strong> A finished thing that people
-                    can actually use beats a perfect thing that only lives on my computer.</p>
-            </div>
+            <div class="cover-grid">
+                <div class="cover-info reveal">
+                    <p class="bl-head">blacklist <b>1</b></p>
+                    <h1 class="tag tag--xl">Undmg</h1>
+                    <p class="real-name">Games · Tools · Web experiments</p>
+                    <p class="alias">Roblox developer &amp; tool builder</p>
 
-            <aside class="toolbox reveal" aria-label="What I use">
-                <p class="kicker">The toolbox</p>
-                <dl>
-                    <div>
-                        <dt>Games</dt>
-                        <dd>Roblox Studio, Luau</dd>
-                    </div>
-                    <div>
-                        <dt>Tools</dt>
-                        <dd>Python, PyQt5, Studio plugins</dd>
-                    </div>
-                    <div>
-                        <dt>Web</dt>
-                        <dd>HTML, CSS, JavaScript, Three.js</dd>
-                    </div>
-                    <div>
-                        <dt>Speed&nbsp;up</dt>
-                        <dd>Claude, ChatGPT, Gemini</dd>
-                    </div>
-                </dl>
-                <blockquote>“If it annoys me twice, I build a tool for it.”</blockquote>
-            </aside>
-        </div>
-    </section>
+                    <dl class="stats">
+                        <div><dt>Ride:</dt><dd>Roblox Studio</dd></div>
+                        <div><dt>Strength:</dt><dd>Shipping it</dd></div>
+                        <div><dt>Now playing:</dt><dd>Blokd! on Roblox</dd></div>
+                    </dl>
 
-    <!-- ============ 02 WORK ============ -->
-    <section class="section work" id="work">
-        <div class="running-head"><span>UNDMG</span><span>Nº 02 — The Work</span><span>p. 03</span></div>
-
-        <div class="work-intro reveal">
-            <p class="kicker">Nº 02 · Selected projects</p>
-            <h2 class="headline headline--xl">The <em>Work</em></h2>
-            <p class="dek">Seven things I’ve made, what they do, and why they exist. No jargon, promise.</p>
-        </div>
-
-        <!-- Cover story -->
-        <article class="feature reveal">
-            <div class="feature-media">
-                <a class="shot shot--feature" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
-                    rel="noopener">
-                    <img src="img/blokd.jpg" alt="Blokd! promo art: a Roblox avatar in front of a glowing 8×8 puzzle board"
-                        loading="lazy">
-                    <span class="shot-tag">Cover story</span>
-                </a>
-                <figure class="trailer">
-                    <div class="trailer-frame">
-                        <iframe width="270" height="480" src="https://www.youtube-nocookie.com/embed/T8aqdRzZVvM?rel=0&amp;playsinline=1"
-                            title="BLOKD! – Official Trailer (YouTube)" loading="lazy"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    <div class="bracketed">
+                        <h2 class="bl-label">bio:</h2>
+                        <p class="bio">I build the things I wish existed: games, tools and strange little web
+                            experiments. If it annoys me twice, I build a tool for it.</p>
                     </div>
-                    <figcaption>
-                        <p class="kicker">Watch · YouTube Short</p>
-                        <p class="trailer-title">The official trailer</p>
-                        <p>A quick look at Blokd! in action: drag, drop, clear and chain those combos.</p>
-                        <a class="more" href="https://www.youtube.com/shorts/T8aqdRzZVvM" target="_blank"
-                            rel="noopener">Watch on YouTube ↗</a>
-                    </figcaption>
+                </div>
+
+                <figure class="mugshot reveal" id="portrait">
+                    <canvas class="portrait-canvas" role="img"
+                        aria-label="Olive-tinted ASCII-art portrait of Undmg in a suit and tie, taking a mirror selfie"></canvas>
                 </figure>
             </div>
 
-            <div class="feature-text">
-                <p class="kicker"><span class="num">01</span> Roblox game · Live</p>
-                <h3 class="feature-title">Blokd!</h3>
-                <p class="dek">Drag, drop, clear. A block puzzle game where the fun is in your hands, not just your
-                    head.</p>
+            <nav class="keybar" aria-label="Cover shortcuts">
+                <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                <a class="key-btn" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank" rel="noopener"
+                    data-key="2" data-sfx data-cursor="play"><kbd>2</kbd><span>Play Blokd!</span></a>
+                <a class="key-btn" href="#bio" data-key="3" data-sfx><kbd>3</kbd><span>Read the issue</span></a>
+            </nav>
+        </section>
 
-                <div class="qa">
-                    <h4>What is it?</h4>
-                    <p>You drag block pieces onto an 8×8 board. Fill a whole row or column and it clears. Clear
-                        several in a row and you build a combo, and combos are where the big scores are.</p>
-                    <h4>Why I made it</h4>
-                    <p>I wanted a puzzle game you play on feel. Quick eyes, quick hands, and that “in the zone”
-                        rhythm, instead of sitting there thinking for ages.</p>
-                    <h4>What's inside</h4>
-                    <ul class="ticks">
-                        <li><b>Solo</b> — beat your own best score.</li>
-                        <li><b>Co-op</b> — up to 4 friends share one board and take turns.</li>
-                        <li><b>Duels</b> — 1v1, and your clears send junk blocks to your rival.</li>
-                        <li><b>Chaos Mode &amp; events</b> — frozen blocks, lava, conveyor belts, even bosses.</li>
-                        <li><b>Style</b> — 20 themed worlds, 30+ block skins, 60+ emotes.</li>
-                        <li><b>Progress</b> — daily quests, a season pass, a prestige shop and leaderboards.</li>
-                    </ul>
+        <!-- ============ 01 BIO ============ -->
+        <section class="bio-sec" id="bio">
+            <div class="splat" data-splat="21" data-splat-mode="olive" aria-hidden="true"></div>
+            <div class="running-head"><span>The Rockport Blacklist</span><span>Nº 01 — Bio</span><span>p. 02</span></div>
+
+            <div class="bio-grid">
+                <div class="bio-head reveal">
+                    <p class="bl-head">bio:</p>
+                    <h2 class="headline">Hi. I'm <span class="tag tag--inline">Undmg</span>. I make things people
+                        <em>play</em> &amp; <em>use</em>.</h2>
                 </div>
 
-                <div class="feature-foot">
-                    <a class="btn" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
-                        rel="noopener">Play it on Roblox <span aria-hidden="true">↗</span></a>
-                    <p class="code-chip">Free code <code>RebornWithRelease</code><br><small>Redeem in the shop for
-                            the Night City theme</small></p>
-                </div>
-            </div>
-        </article>
-
-        <!-- Second feature -->
-        <article class="feature reveal">
-            <div class="feature-media">
-                <a class="shot shot--feature" href="https://www.roblox.com/games/134028721269505/Goldngine-Demo#!/about"
-                    target="_blank" rel="noopener">
-                    <img src="img/goldngine.jpg"
-                        alt="Goldngine Demo promo art: a first-person view of the arena with the orange GOLDNGINE DEMO logo"
-                        loading="lazy">
-                    <span class="shot-tag">New · Demo</span>
-                </a>
-                <a class="shot shot--feature" href="https://www.roblox.com/games/134028721269505/Goldngine-Demo#!/about"
-                    target="_blank" rel="noopener">
-                    <img src="img/goldngine-2.jpg"
-                        alt="Goldngine Demo promo art: 1998-style movement, bunnyhop, air strafe and surf"
-                        loading="lazy">
-                </a>
-            </div>
-
-            <div class="feature-text">
-                <p class="kicker"><span class="num">02</span> Roblox game · Demo</p>
-                <h3 class="feature-title">Goldngine</h3>
-                <p class="dek">An arena shooter that moves like it’s 1998. Fast, twitchy and all about how you
-                    move.</p>
-
-                <div class="qa">
-                    <h4>What is it?</h4>
-                    <p>A free-for-all arena on Roblox where you bunnyhop, air strafe and rocket jump around the map.
-                        Everyone spawns with every weapon, ammo is scattered around, and when you die you’re back in
-                        the fight in seconds. No timer, just drop in and play.</p>
-                    <h4>Why I made it</h4>
-                    <p>Roblox movement feels floaty next to the old PC shooters I grew up on. So I rebuilt that kind
-                        of movement from scratch in Luau, with the same speeds, friction and air control, and built a
-                        game around it.</p>
-                    <h4>What's inside</h4>
-                    <ul class="ticks">
-                        <li><b>Movement</b> — bunnyhop, air strafe, surf ramps, crouch jumps and ladders.</li>
-                        <li><b>14 weapons</b> — crowbar, shotgun, crossbow, a guided rocket launcher and more.</li>
-                        <li><b>Free-for-all</b> — no time limit, 2 seconds of spawn protection.</li>
-                        <li><b>Stations</b> — health and armor chargers, plus medkits and batteries.</li>
-                        <li><b>Lobby</b> — a practice range with target dummies and no PvP.</li>
-                        <li><b>Extras</b> — gibs, explosions and an in-game developer console.</li>
-                    </ul>
+                <div class="bio-cols reveal">
+                    <p class="dropcap">I make games on Roblox, tools that save developers time, and web pages that
+                        feel more like games than websites. Most of it starts with a feeling I want back: how a car slid
+                        in a 2005 street racer, how an old PC shooter moved, how it felt to sit on a menu screen with the
+                        music playing.</p>
+                    <p>Lately that means going deep. I rebuilt Most Wanted's handling in Luau from the game's own
+                        numbers, wrote 1998-style bunnyhop and air-strafe movement from scratch, and generated lo-fi
+                        music live in the browser with <strong>Web Audio</strong>. My main tools are
+                        <strong>Luau</strong>, <strong>Python</strong> and plain <strong>HTML, CSS and
+                            JavaScript</strong>, plus <strong>Three.js</strong> when a page needs real 3D.</p>
+                    <p>I use AI tools like Claude every day to move faster, not to think for me: I break a problem
+                        into pieces, explain it clearly and check what comes back. The rule hasn't changed:
+                        <strong>ship it, then make it better.</strong></p>
                 </div>
 
-                <div class="feature-foot">
-                    <a class="btn" href="https://www.roblox.com/games/134028721269505/Goldngine-Demo#!/about"
-                        target="_blank" rel="noopener">Play the demo on Roblox <span aria-hidden="true">↗</span></a>
-                    <p class="code-chip">Keyboard &amp; mouse recommended<br><small>It’s a demo, so expect changes</small></p>
+                <blockquote class="pull reveal">“If it annoys me twice, I build a tool for it.”<cite>Undmg, on the
+                        record</cite></blockquote>
+
+                <div class="garage reveal" aria-label="What I use">
+                    <p class="bl-label">garage:</p>
+                    <dl>
+                        <div><dt>Games</dt><dd>Roblox Studio, Luau, custom physics &amp; movement</dd></div>
+                        <div><dt>Tools</dt><dd>Python, PyQt5, Studio plugins</dd></div>
+                        <div><dt>Web</dt><dd>HTML, CSS, JavaScript, Three.js, WebGL, Web Audio</dd></div>
+                        <div><dt>Nitrous</dt><dd>Claude, ChatGPT, Gemini</dd></div>
+                    </dl>
                 </div>
             </div>
-        </article>
+        </section>
 
-        <!-- Third feature -->
-        <article class="feature reveal">
-            <div class="feature-media">
-                <a class="shot shot--feature" href="https://www.roblox.com/games/81092452853238" target="_blank"
-                    rel="noopener">
-                    <img src="img/pistonart.jpg"
-                        alt="Pistonart Demo promo art: a white race car parked on a port road with container stacks behind it"
-                        loading="lazy">
-                    <span class="shot-tag">New · Tech demo</span>
-                </a>
+        <!-- ============ 02 BLACKLIST ============ -->
+        <section id="blacklist">
+            <div class="list-intro">
+                <div class="running-head"><span>The Rockport Blacklist</span><span>Nº 02 — The Work</span><span>p. 03</span></div>
+                <p class="bl-head reveal">the blacklist</p>
+                <h2 class="headline headline--xl reveal">Seven rivals. <em>Seven things I've made.</em></h2>
+                <p class="list-dek reveal">What they do and why they exist. No jargon, promise.</p>
+                <ol class="roster reveal">
+                    <li><a href="#r1" data-sfx><b>1</b>Blokd!</a></li>
+                    <li><a href="#r2" data-sfx><b>2</b>Goldngine</a></li>
+                    <li><a href="#r3" data-sfx><b>3</b>Pistonart</a></li>
+                    <li><a href="#r4" data-sfx><b>4</b>Oracle.exe</a></li>
+                    <li><a href="#r5" data-sfx><b>5</b>Golden Hour</a></li>
+                    <li><a href="#r6" data-sfx><b>6</b>RBXL to Text</a></li>
+                    <li><a href="#r7" data-sfx><b>7</b>Rig Closet</a></li>
+                </ol>
             </div>
 
-            <div class="feature-text">
-                <p class="kicker"><span class="num">03</span> Roblox tech demo · For developers</p>
-                <h3 class="feature-title">Pistonart</h3>
-                <p class="dek">The way cars drove in Need for Speed: Most Wanted (2005), rebuilt on Roblox and open
-                    for anyone to test.</p>
+            <!-- #1 Blokd! -->
+            <article class="rival rival--green" id="r1" data-href="https://www.roblox.com/games/18347147065/Blokd" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="101" data-splat-mode="black" aria-hidden="true"></div>
+                <figure class="portrait-img">
+                    <img src="img/blokd.jpg" alt="Blokd! promo art: a Roblox avatar in front of a glowing 8×8 puzzle board" loading="lazy">
+                </figure>
 
-                <div class="qa">
-                    <h4>What is it?</h4>
-                    <p>A test drive, not a full game. You get a car, a whole city and a few tools, so players and
-                        developers can try out the driving system I built: how the car grips, slides, boosts, sounds
-                        and feels at 200 mph.</p>
-                    <h4>Why I made it</h4>
-                    <p>Most Roblox cars feel floaty because they lean on Roblox’s built-in physics. I wanted the weight
-                        and drift of an old favourite, so I went to the source: I read the game’s own handling numbers
-                        and rebuilt the whole car from scratch in Luau to match them.</p>
-                    <h4>What's inside</h4>
-                    <ul class="ticks">
-                        <li><b>Physics</b> — my own suspension, tire grip and drift, running 120 times a second.</li>
-                        <li><b>Engine &amp; gears</b> — engine sound that follows the revs, a real rev limiter, nitrous.</li>
-                        <li><b>Feel</b> — chase camera, tire smoke, skid marks, nitrous flames and sparks.</li>
-                        <li><b>Open world</b> — downtown, autumn hills, a port, a mountain pass and a highway, all
-                            built by code.</li>
-                        <li><b>Multiplayer</b> — race your friends around the city and the street circuit.</li>
-                        <li><b>Extras</b> — a street circuit with a lap timer and a car colour picker.</li>
-                    </ul>
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>1</b></p>
+                        <h3 class="tag reveal">Blokd!</h3>
+                        <p class="real-name">Roblox game</p>
+                        <p class="alias">Cover story · Live now</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Roblox · Luau</dd></div>
+                            <div><dt>Strength:</dt><dd>Combos</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>Drag, drop, clear.</b> You drag block pieces onto an 8×8 board. Fill a
+                                whole row or column and it clears. Clear several in a row and you build a combo, and
+                                combos are where the big scores are.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">I wanted a puzzle game you play on feel. Quick eyes, quick hands, and that
+                                “in the zone” rhythm, instead of sitting there thinking for ages.</p>
+                        </div>
+
+                        <h4 class="bl-label">known for:</h4>
+                        <ul class="intel reveal">
+                            <li><b>Solo</b> beat your own best score</li>
+                            <li><b>Co-op</b> up to 4 friends share one board and take turns</li>
+                            <li><b>Duels</b> 1v1, and your clears send junk blocks to your rival</li>
+                            <li><b>Chaos Mode &amp; events</b> frozen blocks, lava, conveyor belts, even bosses</li>
+                            <li><b>Style</b> 20 themed worlds, 30+ block skins, 60+ emotes</li>
+                            <li><b>Progress</b> daily quests, a season pass, a prestige shop and leaderboards</li>
+                        </ul>
+                        <p class="chip">Free code <code>RebornWithRelease</code> — redeem in the shop for the Night City
+                            theme</p>
+                    </div>
+
+                    <figure class="trailer reveal">
+                        <div class="trailer-frame">
+                            <iframe width="270" height="480"
+                                src="https://www.youtube-nocookie.com/embed/T8aqdRzZVvM?rel=0&amp;playsinline=1"
+                                title="BLOKD! – Official Trailer (YouTube)" loading="lazy"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <figcaption>rival movie · the official trailer</figcaption>
+                    </figure>
                 </div>
 
-                <div class="feature-foot">
-                    <a class="btn" href="https://www.roblox.com/games/81092452853238" target="_blank"
-                        rel="noopener">Try the demo on Roblox <span aria-hidden="true">↗</span></a>
-                    <p class="code-chip">Test placeholders from NFS: Most Wanted (2005)<br><small>Not affiliated with
-                            EA or BMW · being replaced</small></p>
-                </div>
-            </div>
-        </article>
-
-        <!-- The rest -->
-        <div class="projects">
-            <article class="project reveal">
-                <a class="shot" href="https://undmg.github.io/entropy/" target="_blank" rel="noopener">
-                    <img src="img/oracle.jpg"
-                        alt="Oracle.exe: a retro computer desktop under a pale sky with a giant eye, running the oracle's terminal"
-                        loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">04</span> Web experiment · Greek myth × weirdcore</p>
-                <h3 class="project-title">Oracle.exe</h3>
-                <p><strong>In short:</strong> the Oracle of Delphi lives inside a haunted old computer. Type any
-                    question and she answers with a cryptic prophecy. Ask the same thing twice in a day and you get
-                    the same answer, like a real oracle.</p>
-                <p><strong>Why:</strong> in ancient Greece people travelled for weeks to ask one question. I wanted
-                    that feeling in a browser tab, with eyes in the sky, pop-ups that ask if you're still there,
-                    and a start menu that won't let you shut down.</p>
-                <p class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Web Audio</span></p>
-                <a class="more" href="https://undmg.github.io/entropy/" target="_blank" rel="noopener">Ask her a
-                    question ↗</a>
+                <nav class="keybar" aria-label="Blokd! shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://www.youtube.com/shorts/T8aqdRzZVvM" target="_blank" rel="noopener"
+                        data-key="2" data-sfx data-cursor="watch"><kbd>2</kbd><span>View rival movie</span></a>
+                    <a class="key-btn" href="https://www.roblox.com/games/18347147065/Blokd" target="_blank"
+                        rel="noopener" data-key="3" data-sfx data-cursor="play"><kbd>3</kbd><span>Play on Roblox</span></a>
+                </nav>
             </article>
 
-            <article class="project reveal">
-                <a class="shot" href="https://undmg.github.io/golden-hour/" target="_blank" rel="noopener">
-                    <img src="img/golden-hour.jpg"
-                        alt="Golden Hour: a girl in a yellow t-shirt sitting on a rooftop ledge above a hazy golden city, with a game-style main menu"
-                        loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">05</span> Web experiment · "Now" page</p>
-                <h3 class="project-title">Golden Hour</h3>
-                <p><strong>In short:</strong> my "now" page, built like a video game main menu. A girl sits on a
-                    rooftop above a hazy golden city; the menu shows what I’m working on, my devlog
-                    and my setup.</p>
-                <p><strong>Why:</strong> I wanted a page that's nice to just sit on. The city and rooftop are real
-                    3D, she's a 2D drawing sitting inside it, and the lo-fi radio is original music generated live in
-                    your browser. Everything in the menu updates from one small file.</p>
-                <p class="tags"><span>Three.js</span><span>WebGL</span><span>Web Audio</span></p>
-                <a class="more" href="https://undmg.github.io/golden-hour/" target="_blank" rel="noopener">Sit on the
-                    rooftop ↗</a>
+            <!-- #2 Goldngine -->
+            <article class="rival rival--black" id="r2" data-href="https://www.roblox.com/games/134028721269505/Goldngine-Demo#!/about" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="202" data-splat-mode="olive" aria-hidden="true"></div>
+                <figure class="portrait-img">
+                    <img src="img/goldngine.jpg" alt="Goldngine Demo promo art: a first-person view of the arena with the orange GOLDNGINE DEMO logo" loading="lazy">
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>2</b></p>
+                        <h3 class="tag reveal">Goldngine</h3>
+                        <p class="real-name">Roblox game</p>
+                        <p class="alias">Arena shooter · Demo</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Roblox · Luau</dd></div>
+                            <div><dt>Strength:</dt><dd>Movement</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>Moves like it's 1998.</b> A free-for-all arena on Roblox where you
+                                bunnyhop, air strafe and rocket jump around the map. Everyone spawns with every weapon,
+                                ammo is scattered around, and when you die you're back in the fight in seconds. No
+                                timer, just drop in and play.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">Roblox movement feels floaty next to the old PC shooters I grew up on. So I
+                                rebuilt that kind of movement from scratch in Luau, with the same speeds, friction and
+                                air control, and built a game around it.</p>
+                        </div>
+
+                        <h4 class="bl-label">known for:</h4>
+                        <ul class="intel reveal">
+                            <li><b>Movement</b> bunnyhop, air strafe, surf ramps, crouch jumps and ladders</li>
+                            <li><b>14 weapons</b> crowbar, shotgun, crossbow, a guided rocket launcher and more</li>
+                            <li><b>Free-for-all</b> no time limit, 2 seconds of spawn protection</li>
+                            <li><b>Stations</b> health and armor chargers, plus medkits and batteries</li>
+                            <li><b>Lobby</b> a practice range with target dummies and no PvP</li>
+                            <li><b>Extras</b> gibs, explosions and an in-game developer console</li>
+                        </ul>
+                        <p class="chip">Keyboard &amp; mouse recommended — it's a demo, so expect changes</p>
+                    </div>
+
+                    <figure class="evidence reveal">
+                        <img src="img/goldngine-2.jpg" alt="Goldngine Demo promo art: 1998-style movement, bunnyhop, air strafe and surf" loading="lazy">
+                        <figcaption>evidence · bunnyhop, air strafe, surf</figcaption>
+                    </figure>
+                </div>
+
+                <nav class="keybar" aria-label="Goldngine shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://www.roblox.com/games/134028721269505/Goldngine-Demo#!/about"
+                        target="_blank" rel="noopener" data-key="2" data-sfx data-cursor="play"><kbd>2</kbd><span>Play the
+                            demo</span></a>
+                </nav>
             </article>
 
-            <article class="project reveal">
-                <a class="shot" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">
+            <!-- #3 Pistonart -->
+            <article class="rival rival--green" id="r3" data-href="https://www.roblox.com/games/81092452853238" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="303" data-splat-mode="black" aria-hidden="true"></div>
+                <figure class="portrait-img">
+                    <img src="img/pistonart.jpg" alt="Pistonart Demo promo art: a white race car parked on a port road with container stacks behind it" loading="lazy">
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>3</b></p>
+                        <h3 class="tag reveal">Pistonart</h3>
+                        <p class="real-name">Roblox tech demo</p>
+                        <p class="alias">For developers · the reason this page looks like this</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Roblox · Luau</dd></div>
+                            <div><dt>Strength:</dt><dd>Handling</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>Most Wanted (2005) handling, rebuilt on Roblox.</b> A test drive, not a
+                                full game. You get a car, a whole city and a few tools, so players and developers can try
+                                out the driving system I built: how the car grips, slides, boosts, sounds and feels at
+                                200 mph.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">Most Roblox cars feel floaty because they lean on Roblox's built-in physics. I
+                                wanted the weight and drift of an old favourite, so I went to the source: I read the
+                                game's own handling numbers and rebuilt the whole car from scratch in Luau to match
+                                them.</p>
+                        </div>
+
+                        <h4 class="bl-label">known for:</h4>
+                        <ul class="intel reveal">
+                            <li><b>Physics</b> my own suspension, tire grip and drift, running 120 times a second</li>
+                            <li><b>Engine &amp; gears</b> engine sound that follows the revs, a real rev limiter, nitrous</li>
+                            <li><b>Feel</b> chase camera, tire smoke, skid marks, nitrous flames and sparks</li>
+                            <li><b>Open world</b> downtown, autumn hills, a port, a mountain pass and a highway, all built by code</li>
+                            <li><b>Multiplayer</b> race your friends around the city and the street circuit</li>
+                            <li><b>Extras</b> a street circuit with a lap timer and a car colour picker</li>
+                        </ul>
+                        <p class="chip">Test placeholders from NFS: Most Wanted (2005) — not affiliated with EA or BMW,
+                            being replaced</p>
+                    </div>
+                </div>
+
+                <nav class="keybar" aria-label="Pistonart shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://www.roblox.com/games/81092452853238" target="_blank" rel="noopener"
+                        data-key="2" data-sfx data-cursor="drive"><kbd>2</kbd><span>Try the demo</span></a>
+                </nav>
+            </article>
+
+            <!-- #4 Oracle.exe -->
+            <article class="rival rival--black" id="r4" data-href="https://undmg.github.io/entropy/" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="404" data-splat-mode="olive" aria-hidden="true"></div>
+                <figure class="portrait-img">
+                    <img src="img/oracle.jpg" alt="Oracle.exe: a retro computer desktop under a pale sky with a giant eye, running the oracle's terminal" loading="lazy">
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>4</b></p>
+                        <h3 class="tag reveal">Oracle.exe</h3>
+                        <p class="real-name">Web experiment</p>
+                        <p class="alias">Greek myth × weirdcore</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>HTML · CSS · JS · Web Audio</dd></div>
+                            <div><dt>Strength:</dt><dd>Prophecy</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>The Oracle of Delphi lives inside a haunted old computer.</b> Type any
+                                question and she answers with a cryptic prophecy. Ask the same thing twice in a day and
+                                you get the same answer, like a real oracle.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">In ancient Greece people travelled for weeks to ask one question. I wanted
+                                that feeling in a browser tab, with eyes in the sky, pop-ups that ask if you're still
+                                there, and a start menu that won't let you shut down.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="keybar" aria-label="Oracle.exe shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://undmg.github.io/entropy/" target="_blank" rel="noopener"
+                        data-key="2" data-sfx data-cursor="ask"><kbd>2</kbd><span>Ask her a question</span></a>
+                </nav>
+            </article>
+
+            <!-- #5 Golden Hour -->
+            <article class="rival rival--green" id="r5" data-href="https://undmg.github.io/golden-hour/" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="505" data-splat-mode="black" aria-hidden="true"></div>
+                <figure class="portrait-img">
+                    <img src="img/golden-hour.jpg" alt="Golden Hour: a girl in a yellow t-shirt sitting on a rooftop ledge above a hazy golden city, with a game-style main menu" loading="lazy">
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>5</b></p>
+                        <h3 class="tag reveal">Golden Hour</h3>
+                        <p class="real-name">Web experiment</p>
+                        <p class="alias">My "now" page</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Three.js · WebGL · Web Audio</dd></div>
+                            <div><dt>Strength:</dt><dd>Atmosphere</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>Built like a video game main menu.</b> A girl sits on a rooftop above a
+                                hazy golden city; the menu shows what I'm working on, my devlog and my setup.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">I wanted a page that's nice to just sit on. The city and rooftop are real 3D,
+                                she's a 2D drawing sitting inside it, and the lo-fi radio is original music generated
+                                live in your browser. Everything in the menu updates from one small file.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="keybar" aria-label="Golden Hour shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://undmg.github.io/golden-hour/" target="_blank" rel="noopener"
+                        data-key="2" data-sfx data-cursor="visit"><kbd>2</kbd><span>Sit on the rooftop</span></a>
+                </nav>
+            </article>
+
+            <!-- #6 RBXL to Text Tool -->
+            <article class="rival rival--black" id="r6" data-href="https://github.com/undmg/rbxl-to-text-tool" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="606" data-splat-mode="olive" aria-hidden="true"></div>
+                <figure class="portrait-img portrait-img--app">
                     <img src="img/rbxl-tool.png" alt="Screenshot of the RBXL to Text Tool desktop app" loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">06</span> Desktop app · Open source</p>
-                <h3 class="project-title">RBXL to Text Tool</h3>
-                <p><strong>In short:</strong> Roblox saves games in a file that AI tools can't read. This app opens
-                    that file and pulls out every script and object as plain text you can paste anywhere.</p>
-                <p><strong>Why:</strong> I wanted AI to help with my Roblox code, but it couldn't see inside my game.
-                    I built this for myself, it turned out useful, so I made it public. It exports to TXT, LUA or
-                    LUAU and works with Rojo.</p>
-                <p class="tags"><span>Python</span><span>PyQt5</span><span>Roblox</span></p>
-                <a class="more" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener">See
-                    it on GitHub ↗</a>
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>6</b></p>
+                        <h3 class="tag reveal">RBXL to Text</h3>
+                        <p class="real-name">Desktop app</p>
+                        <p class="alias">Open source</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Python · PyQt5</dd></div>
+                            <div><dt>Strength:</dt><dd>TXT · LUA · LUAU exports</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>Roblox saves games in a file that AI tools can't read.</b> This app opens
+                                that file and pulls out every script and object as plain text you can paste anywhere.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">I wanted AI to help with my Roblox code, but it couldn't see inside my game. I
+                                built this for myself, it turned out useful, so I made it public. It exports to TXT, LUA
+                                or LUAU and works with Rojo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="keybar" aria-label="RBXL to Text shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn" href="https://github.com/undmg/rbxl-to-text-tool" target="_blank" rel="noopener"
+                        data-key="2" data-sfx data-cursor="source"><kbd>2</kbd><span>See it on GitHub</span></a>
+                </nav>
             </article>
 
-            <article class="project reveal">
-                <a class="shot shot--tall"
-                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
-                    target="_blank" rel="noopener">
-                    <img src="img/rig-closet.png" alt="Rig Closet plugin window searching the avatar catalog for glasses"
-                        loading="lazy">
-                </a>
-                <p class="kicker"><span class="num">07</span> Roblox Studio plugin</p>
-                <h3 class="project-title">Rig Closet</h3>
-                <p><strong>In short:</strong> a wardrobe for Roblox Studio. Search the avatar shop and put clothes,
-                    hair and accessories on any character rig with one click, without leaving Studio.</p>
-                <p><strong>Why:</strong> dressing up rigs in Studio was slow and fiddly, and it annoyed me. Now it
-                    saves animators and builders a lot of clicking.</p>
-                <p class="tags"><span>Luau</span><span>Plugin</span><span>Studio</span></p>
-                <a class="more"
-                    href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
-                    target="_blank" rel="noopener">Get it on the Creator Store ↗</a>
+            <!-- #7 Rig Closet -->
+            <article class="rival rival--green" id="r7" data-href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs" data-rival data-section>
+                <div class="smoke" aria-hidden="true"></div>
+                <div class="splat" data-splat="707" data-splat-mode="black" aria-hidden="true"></div>
+                <figure class="portrait-img portrait-img--app">
+                    <img src="img/rig-closet.png" alt="Rig Closet plugin window searching the avatar catalog for glasses" loading="lazy">
+                </figure>
+
+                <div class="rival-grid">
+                    <div class="rival-info">
+                        <p class="bl-head reveal">blacklist <b>7</b></p>
+                        <h3 class="tag reveal">Rig Closet</h3>
+                        <p class="real-name">Roblox Studio plugin</p>
+                        <p class="alias">On the Creator Store</p>
+                        <dl class="stats">
+                            <div><dt>Ride:</dt><dd>Luau · Studio</dd></div>
+                            <div><dt>Strength:</dt><dd>One-click outfits</dd></div>
+                        </dl>
+
+                        <div class="bracketed reveal">
+                            <h4 class="bl-label">bio:</h4>
+                            <p class="bio"><b>A wardrobe for Roblox Studio.</b> Search the avatar shop and put clothes,
+                                hair and accessories on any character rig with one click, without leaving Studio.</p>
+                            <h4 class="bl-label">motive:</h4>
+                            <p class="bio">Dressing up rigs in Studio was slow and fiddly, and it annoyed me. Now it
+                                saves animators and builders a lot of clicking.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <nav class="keybar" aria-label="Rig Closet shortcuts">
+                    <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back</span></a>
+                    <a class="key-btn"
+                        href="https://create.roblox.com/store/asset/135237372926693/Rig-Closet-Easily-access-catalog-for-rigs"
+                        target="_blank" rel="noopener" data-key="2" data-sfx data-cursor="get it"><kbd>2</kbd><span>Get it on
+                            the Creator Store</span></a>
+                </nav>
             </article>
-        </div>
-    </section>
+        </section>
 
-    <!-- ============ 03 CONTACT ============ -->
-    <section class="section contact" id="contact">
-        <div class="running-head running-head--light"><span>UNDMG</span><span>Nº 03 — Say hi</span><span>p. 04</span></div>
+        <!-- ============ 03 PURSUIT ============ -->
+        <section class="pursuit" id="pursuit" data-rival>
+            <div class="smoke" aria-hidden="true"></div>
+            <div class="splat" data-splat="909" data-splat-mode="black" aria-hidden="true"></div>
+            <div class="running-head"><span>The Rockport Blacklist</span><span>Nº 03 — Pursuit</span><span>p. 04</span></div>
 
-        <div class="contact-inner">
-            <p class="kicker kicker--light">Nº 03 · Get in touch</p>
-            <h2 class="contact-title reveal">Got an idea?<br><em>Let's build it.</em></h2>
-            <p class="contact-dek reveal">The quickest way to reach me is Discord. You'll also find my code on GitHub
-                and shorter stuff on YouTube and TikTok.</p>
+            <p class="bl-head">pursuit:</p>
+            <h2 class="tag tag--xl">Got an idea?</h2>
+            <p class="pursuit-sub">Let's build it.</p>
+            <p class="pursuit-dek">The quickest way to reach me is Discord. You'll also find my code on GitHub and
+                shorter stuff on YouTube and TikTok.</p>
 
-            <ul class="links reveal">
-                <li><button type="button" data-copy="undmg"><span>Discord</span><b>undmg</b><i
-                            class="hint">click to copy</i></button></li>
-                <li><a href="https://github.com/undmg" target="_blank" rel="noopener"><span>GitHub</span><b>@undmg</b><i
-                            aria-hidden="true">↗</i></a></li>
-                <li><a href="https://www.youtube.com/@hwidban" target="_blank"
-                        rel="noopener"><span>YouTube</span><b>@hwidban</b><i aria-hidden="true">↗</i></a></li>
-                <li><a href="https://www.tiktok.com/@hwid.ban" target="_blank"
-                        rel="noopener"><span>TikTok</span><b>@hwid.ban</b><i aria-hidden="true">↗</i></a></li>
+            <ul class="links">
+                <li><button type="button" data-copy="undmg" data-sfx data-cursor="copy"><span class="bl-label">Discord:</span><b>undmg</b><i>click to copy</i></button></li>
+                <li><a href="https://github.com/undmg" target="_blank" rel="noopener" data-sfx><span class="bl-label">GitHub:</span><b>@undmg</b><i aria-hidden="true">↗</i></a></li>
+                <li><a href="https://www.youtube.com/@hwidban" target="_blank" rel="noopener" data-sfx><span class="bl-label">YouTube:</span><b>@hwidban</b><i aria-hidden="true">↗</i></a></li>
+                <li><a href="https://www.tiktok.com/@hwid.ban" target="_blank" rel="noopener" data-sfx><span class="bl-label">TikTok:</span><b>@hwid.ban</b><i aria-hidden="true">↗</i></a></li>
             </ul>
-        </div>
 
-        <footer class="colophon">
-            <span>© 2026 UNDMG</span>
-            <span>Set in Instrument Serif &amp; Archivo · Portrait printed in ASCII</span>
-            <a href="#top">Back to the cover ↑</a>
-        </footer>
-    </section>
+            <nav class="keybar" aria-label="Pursuit shortcuts">
+                <a class="key-btn" href="#top" data-key="Escape" data-sfx><kbd>Esc</kbd><span>Back to the start</span></a>
+                <button type="button" class="key-btn" data-copy="undmg" data-key="2" data-sfx data-cursor="copy"><kbd>2</kbd><span>Copy Discord</span></button>
+                <a class="key-btn" href="https://github.com/undmg" target="_blank" rel="noopener" data-key="3" data-sfx><kbd>3</kbd><span>GitHub</span></a>
+            </nav>
+        </section>
+    </main>
+
+    <footer class="colophon">
+        <span>© 2026 Undmg</span>
+        <span>Set in UnifrakturCook, Sedgwick Ave &amp; Archivo · Portrait printed in ASCII · A fan homage, not affiliated with EA</span>
+    </footer>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="js/portrait-data.js?v=76f51297"></script>
-    <script src="js/main.js?v=0bb08f1a"></script>
+    <script src="js/main.js?v=2a928b00"></script>
 </body>
 
 </html>

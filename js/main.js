@@ -31,16 +31,29 @@
     }
 
     // =========================================================
-    // Sound — tiny menu blips synthesized with Web Audio, off by default
+    // Sound — console-menu blips synthesized with Web Audio (no files to load).
+    // On by default; browsers only allow audio after the first click or key.
     // =========================================================
     const SFX = (() => {
-        let ctx = null, on = false;
-        try { on = localStorage.getItem('undmg-sfx') === '1'; } catch { /* storage blocked */ }
+        let ctx = null, out = null, on = true, lastMove = 0;
+        try { on = localStorage.getItem('undmg-sfx') !== '0'; } catch { /* storage blocked */ }
 
         function ensure() {
             if (ctx) { if (ctx.state === 'suspended') ctx.resume(); return; }
             const AC = window.AudioContext || window.webkitAudioContext;
-            if (AC) ctx = new AC();
+            if (!AC) return;
+            ctx = new AC();
+            // a short feedback echo gives the airy, glassy console-menu tail
+            out = ctx.createGain();
+            out.gain.value = 0.8;
+            const delay = ctx.createDelay(), fb = ctx.createGain(), wet = ctx.createGain();
+            delay.delayTime.value = 0.11;
+            fb.gain.value = 0.28;
+            wet.gain.value = 0.22;
+            out.connect(ctx.destination);
+            out.connect(delay);
+            delay.connect(fb).connect(delay);
+            delay.connect(wet).connect(ctx.destination);
         }
 
         function tone(f, f2, dur, vol, delay = 0, type = 'sine') {
@@ -52,29 +65,54 @@
             g.gain.setValueAtTime(0, t);
             g.gain.linearRampToValueAtTime(vol, t + 0.006);
             g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
-            o.connect(g).connect(ctx.destination);
+            o.connect(g).connect(out);
             o.start(t);
             o.stop(t + dur + 0.02);
         }
 
         const sounds = {
-            move: () => tone(1320, 1180, 0.06, 0.05),
-            ok: () => { tone(880, 880, 0.08, 0.06); tone(1320, 1320, 0.12, 0.05, 0.06); },
-            back: () => { tone(990, 660, 0.12, 0.06, 0, 'triangle'); },
+            // cursor moves onto something
+            move: () => { tone(1760, 1640, 0.045, 0.025); },
+            // select / confirm
+            ok: () => {
+                tone(988, 988, 0.09, 0.05);
+                tone(1480, 1480, 0.16, 0.04, 0.055);
+                tone(2960, 2900, 0.12, 0.012, 0.055, 'triangle');
+            },
+            // cancel / back
+            back: () => { tone(1175, 784, 0.14, 0.05, 0, 'triangle'); },
+            // memory card "save complete" arpeggio
+            save: () => {
+                [784, 988, 1175, 1568].forEach((f, i) => tone(f, f, 0.18, 0.04, i * 0.065));
+            },
+            // sound switched on
+            power: () => {
+                tone(220, 440, 0.35, 0.05);
+                tone(660, 1320, 0.5, 0.03, 0.12);
+            },
         };
+
+        // unlock audio on the first real interaction
+        const unlock = () => { if (on) ensure(); };
+        window.addEventListener('pointerdown', unlock, { once: true });
+        window.addEventListener('keydown', unlock, { once: true });
 
         return {
             get on() { return on; },
             toggle() {
                 on = !on;
                 try { localStorage.setItem('undmg-sfx', on ? '1' : '0'); } catch { /* storage blocked */ }
-                if (on) { ensure(); sounds.ok(); }
+                if (on) { ensure(); sounds.power(); }
                 return on;
             },
             play(name) {
-                if (!on) return;
-                ensure();
-                if (ctx && sounds[name]) sounds[name]();
+                if (!on || !ctx || ctx.state !== 'running' || !sounds[name]) return;
+                if (name === 'move') {
+                    const now = performance.now();
+                    if (now - lastMove < 50) return;
+                    lastMove = now;
+                }
+                sounds[name]();
             },
         };
     })();
@@ -89,12 +127,71 @@
         sfxBtn.addEventListener('click', () => { SFX.toggle(); paintSfx(); });
     }
 
-    document.querySelectorAll('[data-sfx]').forEach(el => {
-        el.addEventListener('click', () => SFX.play(el.dataset.sfx));
-        if (el.dataset.sfx === 'move' || el.classList.contains('menu__row')) {
-            el.addEventListener('pointerenter', () => SFX.play('move'));
-        }
+    // every link and button blips on hover and chimes on click
+    const INTERACTIVE = 'a, button, [data-cursor]';
+    let hovered = null;
+    document.addEventListener('pointerover', e => {
+        const el = e.target.closest(INTERACTIVE);
+        if (el && el !== hovered) SFX.play('move');
+        hovered = el;
     });
+    document.addEventListener('click', e => {
+        const el = e.target.closest(INTERACTIVE);
+        if (el && el !== sfxBtn) SFX.play(el.dataset.sfx || 'ok');
+    });
+    document.addEventListener('focusin', e => {
+        if (e.target.matches(':focus-visible')) SFX.play('move');
+    });
+
+    // =========================================================
+    // Custom cursor — a dot that sticks to the pointer and a ring that
+    // trails it, growing into a labelled target over anything clickable.
+    // =========================================================
+    if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        const cursor = document.createElement('div');
+        cursor.className = 'cursor';
+        cursor.setAttribute('aria-hidden', 'true');
+        cursor.innerHTML = '<span class="cursor__ring"><span class="cursor__label"></span></span><span class="cursor__dot"></span>';
+        document.body.appendChild(cursor);
+        root.classList.add('has-cursor');
+
+        const ring = cursor.querySelector('.cursor__ring');
+        const dot = cursor.querySelector('.cursor__dot');
+        const label = cursor.querySelector('.cursor__label');
+        let x = -100, y = -100, rx = -100, ry = -100, moving = false;
+
+        const labelFor = el => {
+            if (el.dataset.cursor) return el.dataset.cursor;
+            if (el.matches('button')) return 'Select';
+            if (el.target === '_blank') return 'Open ↗';
+            return 'Go';
+        };
+
+        function follow() {
+            const k = reduceMotion ? 1 : 0.2;
+            rx += (x - rx) * k;
+            ry += (y - ry) * k;
+            ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+            if (Math.abs(x - rx) + Math.abs(y - ry) > 0.2) requestAnimationFrame(follow);
+            else moving = false;
+        }
+
+        document.addEventListener('pointermove', e => {
+            x = e.clientX; y = e.clientY;
+            dot.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            cursor.classList.add('is-on');
+            if (!moving) { moving = true; requestAnimationFrame(follow); }
+        });
+        document.addEventListener('pointerover', e => {
+            const el = e.target.closest(INTERACTIVE);
+            cursor.classList.toggle('is-hover', !!el);
+            cursor.classList.toggle('is-media', !!(el && el.classList.contains('fig__link')));
+            if (el) label.textContent = labelFor(el);
+        });
+        document.addEventListener('pointerdown', () => cursor.classList.add('is-down'));
+        document.addEventListener('pointerup', () => cursor.classList.remove('is-down'));
+        document.documentElement.addEventListener('pointerleave', () => cursor.classList.remove('is-on'));
+    }
 
     // =========================================================
     // Cover towers — the floating memory blocks of an old console menu.

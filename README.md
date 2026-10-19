@@ -8,7 +8,8 @@ floating memory-block towers, controller-button prompts and spinning save icons.
 - `index.html`: the page. Cover → About → Memory card index → three feature
   spreads (Blokd!, Goldngine, Pistonart) → four shorter reads → Contact
 - `css/style.css`: all styles (tokens at the top, one section per part of the page)
-- `js/main.js`: boot screen, optional menu sounds (Web Audio, off by default),
+- `js/main.js`: boot screen, console-menu sounds (Web Audio, on by default,
+  toggle in the top bar), a custom cursor that labels what you're pointing at,
   the tower field on the cover (2D canvas), the ASCII portrait renderer,
   scroll reveals, current-section nav, and copy-to-clipboard
 - `js/portrait-data.js`: the portrait as ASCII characters + colours (no photo is published)

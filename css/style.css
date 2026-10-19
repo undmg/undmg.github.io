@@ -1355,6 +1355,188 @@ a.prompt:hover {
     transform: translate(-50%, 0);
 }
 
+/* ---------- clickable project images ---------- */
+.fig__link {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--ink);
+}
+
+.fig__link img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.3s;
+}
+
+.fig__link::after {
+    /* blue scanline wash, like a highlighted save */
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        repeating-linear-gradient(to bottom, rgba(255, 255, 255, 0.07) 0 1px, transparent 1px 3px),
+        linear-gradient(to top, rgba(43, 76, 255, 0.45), transparent 60%);
+    opacity: 0;
+    transition: opacity 0.25s;
+    pointer-events: none;
+}
+
+.fig__cta {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6em;
+    padding: 0.65em 1em 0.65em 0.7em;
+    border: 2px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 800;
+    font-stretch: 110%;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 4px 4px 0 var(--accent, var(--x));
+    transform: translateY(calc(100% + 20px));
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.fig__link:hover img,
+.fig__link:focus-visible img {
+    transform: scale(1.045);
+    filter: saturate(1.15) contrast(1.05);
+}
+
+.fig__link:hover::after,
+.fig__link:focus-visible::after {
+    opacity: 1;
+}
+
+.fig__link:hover .fig__cta,
+.fig__link:focus-visible .fig__cta {
+    transform: none;
+}
+
+.fig__link:focus-visible {
+    outline-offset: -4px;
+}
+
+/* no hover on touch screens: keep the button visible */
+@media (hover: none) {
+    .fig__cta {
+        transform: none;
+        font-size: 0.7rem;
+    }
+}
+
+/* ---------- custom cursor ---------- */
+.has-cursor,
+.has-cursor * {
+    cursor: none !important;
+}
+
+.cursor {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.cursor.is-on {
+    opacity: 1;
+}
+
+.cursor__dot,
+.cursor__ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    will-change: transform;
+}
+
+.cursor__dot::before {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    background: #fff;
+    mix-blend-mode: difference;
+    transform: rotate(45deg);
+    transition: transform 0.15s;
+}
+
+.cursor__ring::before {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1.5px solid var(--x);
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba(125, 151, 255, 0.5);
+    transition: width 0.25s, height 0.25s, margin 0.25s, background 0.25s, border-radius 0.25s, transform 0.15s;
+}
+
+.cursor__label {
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    padding: 0.3em 0.55em;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--x);
+    font-family: var(--f-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-6px, -6px);
+    transition: opacity 0.15s, transform 0.2s;
+}
+
+.cursor.is-hover .cursor__ring::before {
+    width: 58px;
+    height: 58px;
+    margin: -29px 0 0 -29px;
+    background: rgba(125, 151, 255, 0.18);
+}
+
+.cursor.is-hover .cursor__label {
+    opacity: 1;
+    transform: none;
+}
+
+.cursor.is-hover .cursor__dot::before {
+    transform: rotate(45deg) scale(0.6);
+}
+
+/* over a project image: a square "select" frame instead of a ring */
+.cursor.is-media .cursor__ring::before {
+    width: 84px;
+    height: 84px;
+    margin: -42px 0 0 -42px;
+    border-radius: 0;
+    border-width: 2px;
+    background: transparent;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4), 0 0 18px rgba(125, 151, 255, 0.7);
+}
+
+.cursor.is-media .cursor__label {
+    top: 50px;
+    left: 50px;
+    font-size: 0.75rem;
+}
+
+.cursor.is-down .cursor__ring::before {
+    transform: scale(0.82);
+}
+
 /* ---------- scroll reveal ---------- */
 .js .reveal {
     opacity: 0;

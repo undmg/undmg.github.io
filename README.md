@@ -1,16 +1,18 @@
 # undmg.github.io
 
-My portfolio, *The Rockport Blacklist*: an editorial page styled after the
-blacklist screens in Need for Speed: Most Wanted (2005). Olive smoke, ink
-splatter, blackletter labels, graffiti tags, and an ASCII mugshot.
+My portfolio, *Issue 04: Memory Card*. It looks like a brutalist print magazine
+mixed with an early-2000s console system menu: an exposed 12-column grid, heavy
+rules and condensed headlines on paper pages, and dark "system" screens with
+floating memory-block towers, controller-button prompts and spinning save icons.
 
-- `index.html`: the page. Each project is a "rival" with its own key bar
-  (press `Esc`, `2` or `3` on any screen)
-- `css/style.css`: styles
-- `js/main.js`: synthesized SFX, bracket cursor, loader, heat/bounty meter,
-  ink splatters, skyline, ASCII portrait renderer, scroll reveals
+- `index.html`: the page. Cover → About → Memory card index → three feature
+  spreads (Blokd!, Goldngine, Pistonart) → four shorter reads → Contact
+- `css/style.css`: all styles (tokens at the top, one section per part of the page)
+- `js/main.js`: boot screen, optional menu sounds (Web Audio, off by default),
+  the tower field on the cover (2D canvas), the ASCII portrait renderer,
+  scroll reveals, current-section nav, and copy-to-clipboard
 - `js/portrait-data.js`: the portrait as ASCII characters + colours (no photo is published)
 - `img/`: project screenshots
 
 No build step: it's plain HTML, CSS and JavaScript served by GitHub Pages.
-A fan homage, not affiliated with EA.
+Fonts: Archivo, Instrument Serif and JetBrains Mono from Google Fonts.
